@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>ace-admin</module>
+        <module>ace-product</module>
     </modules>
 
 
