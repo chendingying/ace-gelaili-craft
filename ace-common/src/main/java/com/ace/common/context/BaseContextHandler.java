@@ -14,7 +14,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by ace on 2017/9/8.
+ * Created by cdy on 2017/9/8.
  */
 public class BaseContextHandler {
     public static ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<Map<String, Object>>();

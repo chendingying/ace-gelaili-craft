@@ -1,7 +1,7 @@
 package com.ace.common.constant;
 
 /**
- * Created by ace on 2017/8/23.
+ * Created by cdy on 2017/8/23.
  */
 public class RestCodeConstants {
 

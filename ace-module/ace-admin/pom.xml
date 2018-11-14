@@ -17,8 +17,8 @@
         <!-- MyBatis Generator -->
         <!-- Java接口和实体类 -->
         <targetJavaProject>${basedir}/src/main/java</targetJavaProject>
-        <targetMapperPackage>com.github.wxiaoqi.security.admin.mapper</targetMapperPackage>
-        <targetModelPackage>com.github.wxiaoqi.security.admin.entity</targetModelPackage>
+        <targetMapperPackage>com.ace.admin.mapper</targetMapperPackage>
+        <targetModelPackage>com.ace.admin.entity</targetModelPackage>
         <!-- XML生成路径 -->
         <targetResourcesProject>${basedir}/src/main/resources</targetResourcesProject>
         <targetXMLPackage>mapper</targetXMLPackage>

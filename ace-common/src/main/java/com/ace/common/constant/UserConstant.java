@@ -1,10 +1,7 @@
 package com.ace.common.constant;
 
 /**
- * ${DESCRIPTION}
- *
- * @author wanghaobin
- * @create 2017-06-14 8:36
+ * Created by cdy on 2017/8/23.
  */
 public class UserConstant {
     public static int PW_ENCORDER_SALT = 12;

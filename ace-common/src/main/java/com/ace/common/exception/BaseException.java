@@ -1,7 +1,7 @@
 package com.ace.common.exception;
 
 /**
- * Created by ace on 2017/9/8.
+ * Created by cdy on 2017/9/8.
  */
 public class BaseException extends RuntimeException {
     private int status = 200;

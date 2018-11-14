@@ -5,7 +5,7 @@ import com.ace.common.constant.CommonConstants;
 import com.ace.common.exception.BaseException;
 
 /**
- * Created by ace on 2017/9/12.
+ * Created by cdy on 2017/9/12.
  */
 public class ClientForbiddenException extends BaseException {
     public ClientForbiddenException(String message) {

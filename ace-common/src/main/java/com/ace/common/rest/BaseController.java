@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * ${DESCRIPTION}
  *
- * @author wanghaobin
+ * @author cdy
  * @create 2017-06-15 8:48
  */
 @Slf4j
@@ -25,6 +25,7 @@ public class BaseController<Biz extends BaseBiz,Entity> {
     protected HttpServletRequest request;
     @Autowired
     protected Biz baseBiz;
+
     @RequestMapping(value = "",method = RequestMethod.POST)
     @ResponseBody
     public ObjectRestResponse<Entity> add(@RequestBody Entity entity){

@@ -14,10 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Mr.AG
- * Date: 17/1/13
- * Time: 15:13
- * Version 1.0.0
+ * Created by cdy on 2018/11/14.
  */
 public abstract class BaseBiz<M extends Mapper<T>, T> {
     @Autowired

@@ -1,7 +1,7 @@
 package com.ace.common.constant;
 
 /**
- * Created by ace on 2017/8/29.
+ * Created by cdy on 2017/8/29.
  */
 public class CommonConstants {
     public final static String RESOURCE_TYPE_MENU = "menu";
@@ -19,5 +19,4 @@ public class CommonConstants {
     public static final String CONTEXT_KEY_USER_TOKEN = "currentUserToken";
     public static final String JWT_KEY_USER_ID = "userId";
     public static final String JWT_KEY_NAME = "name";
-    public static final String JWT_SECRET = "XX1#$%()(#*!()!KL<><MQLMNQNQJQK sdfkjsdrow32234545fdf>?N<:{LWPW";
 }

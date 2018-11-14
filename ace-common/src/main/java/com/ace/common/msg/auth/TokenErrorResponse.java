@@ -4,7 +4,7 @@ import com.ace.common.constant.RestCodeConstants;
 import com.ace.common.msg.BaseResponse;
 
 /**
- * Created by ace on 2017/8/23.
+ * Created by cdy on 2017/8/23.
  */
 public class TokenErrorResponse extends BaseResponse {
     public TokenErrorResponse(String message) {
