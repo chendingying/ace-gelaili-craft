@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * ${DESCRIPTION}
  *
- * @author wanghaobin
+ * @author cdy
  * @create 2017-07-01 14:36
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GateLogBiz extends BaseBiz<GateLogMapper, GateLog> {
+public class GateLogBiz extends BaseBiz<GateLogMapper,GateLog> {
 
     @Override
     public void insert(GateLog entity) {

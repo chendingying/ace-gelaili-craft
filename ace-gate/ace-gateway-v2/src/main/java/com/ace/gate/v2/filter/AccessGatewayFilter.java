@@ -52,12 +52,9 @@ import java.util.stream.Stream;
 @Configuration
 @Slf4j
 public class AccessGatewayFilter implements GlobalFilter {
-
-    Logger log = LoggerFactory.getLogger(AccessGatewayFilter.class);
     @Autowired
     @Lazy
     private IUserService userService;
-
     @Autowired
     @Lazy
     private ILogService logService;

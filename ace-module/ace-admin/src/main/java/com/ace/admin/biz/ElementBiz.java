@@ -13,17 +13,17 @@ import java.util.List;
 /**
  * ${DESCRIPTION}
  *
- * @author wanghaobin
+ * @author cdy
  * @create 2017-06-23 20:27
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ElementBiz extends BaseBiz<ElementMapper, Element> {
+public class ElementBiz extends BaseBiz<ElementMapper,Element> {
     @Cache(key="permission:ele:u{1}")
     public List<Element> getAuthorityElementByUserId(String userId){
-       return mapper.selectAuthorityElementByUserId(userId);
+        return mapper.selectAuthorityElementByUserId(userId);
     }
-    public List<Element> getAuthorityElementByUserId(String userId, String menuId){
+    public List<Element> getAuthorityElementByUserId(String userId,String menuId){
         return mapper.selectAuthorityMenuElementByUserId(userId,menuId);
     }
 

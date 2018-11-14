@@ -19,8 +19,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 @Slf4j
 public class DBLog extends Thread {
-
-    Logger log = LoggerFactory.getLogger(DBLog.class);
     private static DBLog dblog = null;
     private static BlockingQueue<LogInfo> logInfoQueue = new LinkedBlockingQueue<LogInfo>(1024);
 

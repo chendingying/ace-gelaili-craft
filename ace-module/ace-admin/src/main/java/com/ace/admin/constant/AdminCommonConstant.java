@@ -3,7 +3,7 @@ package com.ace.admin.constant;
 /**
  * ${DESCRIPTION}
  *
- * @author wanghaobin
+ * @author cdy
  * @create 2017-06-17 14:41
  */
 public class AdminCommonConstant {

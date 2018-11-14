@@ -17,8 +17,6 @@ import java.util.List;
 @Service
 @Slf4j
 public class UserServiceFallback implements IUserService {
-
-    Logger log = LoggerFactory.getLogger(UserServiceFallback.class);
     @Override
     public List<PermissionInfo> getPermissionByUsername(@PathVariable("username") String username) {
         log.error("调用{}异常{}","getPermissionByUsername",username);
