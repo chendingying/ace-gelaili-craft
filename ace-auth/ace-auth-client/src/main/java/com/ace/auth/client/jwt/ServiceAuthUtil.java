@@ -21,14 +21,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.util.List;
 
 /**
- * Created by ace on 2017/9/15.
+ * Created by cdy on 2018/11/14.
  */
 @Configuration
 @Slf4j
 @EnableScheduling
 public class ServiceAuthUtil{
-
-    Logger log = LoggerFactory.getLogger(ServiceAuthUtil.class);
     @Autowired
     private ServiceAuthConfig serviceAuthConfig;
 

@@ -7,9 +7,8 @@ import com.ace.common.biz.BaseBiz;
 import org.springframework.stereotype.Service;
 
 /**
- * @author ace
- * @create 2017/12/30.
+ * Created by cdy on 2018/11/14.
  */
 @Service
-public class ClientServiceBiz extends BaseBiz<ClientServiceMapper, ClientService> {
+public class ClientServiceBiz extends BaseBiz<ClientServiceMapper,ClientService> {
 }

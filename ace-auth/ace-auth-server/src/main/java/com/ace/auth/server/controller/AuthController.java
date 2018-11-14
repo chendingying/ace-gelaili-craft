@@ -26,7 +26,6 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    Logger log = LoggerFactory.getLogger(AuthController.class);
     @RequestMapping(value = "token", method = RequestMethod.POST)
     public ObjectRestResponse<String> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest) throws Exception {

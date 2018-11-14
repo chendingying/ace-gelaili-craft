@@ -3,7 +3,7 @@ package com.ace.auth.common.util.jwt;
 import java.io.Serializable;
 
 /**
- * Created by ace on 2017/9/10.
+ * Created by cdy on 2018/11/14.
  */
 public class JWTInfo implements Serializable,IJWTInfo {
     private String username;

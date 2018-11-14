@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by ace on 2017/9/12.
+ * Created by cdy on 2018/11/14.
  */
 @Configuration
 public class ClientConfiguration {

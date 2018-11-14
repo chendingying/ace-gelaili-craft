@@ -12,14 +12,10 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 /**
- * 
- *
- * @author Mr.AG
- * @email 463540703@qq.com
- * @date 2017-12-26 19:43:46
+ * Created by cdy on 2018/11/14.
  */
 @Service
-public class ClientBiz extends BaseBiz<ClientMapper, Client> {
+public class ClientBiz extends BaseBiz<ClientMapper,Client> {
     @Autowired
     private ClientServiceMapper clientServiceMapper;
     @Autowired

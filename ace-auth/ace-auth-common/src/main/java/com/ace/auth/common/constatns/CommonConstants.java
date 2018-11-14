@@ -1,7 +1,7 @@
 package com.ace.auth.common.constatns;
 
 /**
- * Created by ace on 2017/8/29.
+ * Created by cdy on 2018/11/14.
  */
 public class CommonConstants {
     public final static String RESOURCE_TYPE_MENU = "menu";

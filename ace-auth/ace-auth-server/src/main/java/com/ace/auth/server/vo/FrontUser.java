@@ -6,7 +6,7 @@ import com.ace.api.vo.authority.PermissionInfo;
 import java.util.List;
 
 /**
- * Created by ace on 2017/8/22.
+ * Created by cdy on 2017/8/22.
  */
 public class FrontUser {
     public String id;

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by ace on 2017/9/15.
+ * Created by cdy on 2018/11/14.
  */
 @Configuration
 public class UserAuthUtil {
@@ -27,5 +27,4 @@ public class UserAuthUtil {
             throw new UserTokenException("User token is null or empty!");
         }
     }
-
 }

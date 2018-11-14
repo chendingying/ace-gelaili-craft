@@ -17,14 +17,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 /**
  * 监听完成时触发
  *
- * @author ace
- * @create 2017/11/29.
+ * @author cdy
+ * @create 2018/11/14.
  */
 @Configuration
 @Slf4j
 public class AuthClientRunner implements CommandLineRunner {
 
-    Logger log = LoggerFactory.getLogger(AuthClientRunner.class);
     @Autowired
     private ServiceAuthConfig serviceAuthConfig;
     @Autowired
@@ -34,7 +33,7 @@ public class AuthClientRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Users加载用户pubKey");
+        log.info("初始化加载用户pubKey");
         try {
             refreshUserPubKey();
         }catch(Exception e){

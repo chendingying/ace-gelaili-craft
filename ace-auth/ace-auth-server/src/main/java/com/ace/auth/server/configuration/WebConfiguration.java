@@ -10,9 +10,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- *
- * @author ace
- * @date 2017/9/8
+ * Created by cdy on 2018/11/14.
  */
 @Configuration("admimWebConfig")
 @Primary

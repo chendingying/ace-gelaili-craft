@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * Created by ace on 2017/9/15.
+ * Created by cdy on 2018/11/14..
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -15,3 +15,4 @@ import java.lang.annotation.*;
 @Inherited
 public @interface EnableAceAuthClient {
 }
+
