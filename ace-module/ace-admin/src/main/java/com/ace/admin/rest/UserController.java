@@ -10,6 +10,7 @@ import com.ace.admin.rpc.service.PermissionService;
 import com.ace.admin.vo.FrontUser;
 import com.ace.admin.vo.MenuTree;
 import com.ace.auth.client.jwt.UserAuthUtil;
+import com.ace.common.context.BaseContextHandler;
 import com.ace.common.exception.BaseException;
 import com.ace.common.msg.BaseResponse;
 import com.ace.common.msg.ObjectRestResponse;
@@ -59,9 +60,15 @@ public class UserController extends BaseController<UserBiz,User> {
         return menuBiz.selectListAll();
     }
 
+    /**
+     * 用户重置密码
+     * @param userResetPassword
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/reset/password",method = RequestMethod.PUT)
     @ResponseBody
-    public BaseResponse resetPassWord(@RequestBody UserResetPassword userResetPassword) throws Exception {
+    public BaseResponse resetPassWord(@RequestBody UserResetPassword userResetPassword) {
         User user = baseBiz.selectById(userResetPassword.getUserId());
         if(BCrypt.checkpw(userResetPassword.getOldPassword(), user.getPassword())){
             String hashed = BCrypt.hashpw(userResetPassword.getNewPassword(), BCrypt.gensalt());
@@ -70,6 +77,20 @@ public class UserController extends BaseController<UserBiz,User> {
         }else{
             throw new BaseException("旧密码输入错误");
         }
+        return new ObjectRestResponse<User>().rel(true);
+    }
+
+    /**
+     * 超管重置密码
+     * @param userResetPassword
+     * @return
+     */
+    @RequestMapping(value = "/admin/reset/password",method = RequestMethod.PUT)
+    @ResponseBody
+    public BaseResponse adminResetPassword(@RequestBody UserResetPassword userResetPassword) {
+        User user = baseBiz.selectById(userResetPassword.getUserId());
+        user.setPassword(userResetPassword.getNewPassword());
+        baseBiz.updateSelectiveById(user);
         return new ObjectRestResponse<User>().rel(true);
     }
 }
