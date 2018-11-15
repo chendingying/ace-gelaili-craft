@@ -25,9 +25,13 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
 
-    public TableResultResponse<Process> selectProcessForMaxVersion(Query query,Process process){
+    public TableResultResponse<Map<String,Object>> selectProcessForMaxVersion(Query query,Process process){
         Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());
-        List<Process> list  = mapper.selectProcessForMaxVersion(process.getU9Coding(),process.getCustomer());
-        return new TableResultResponse<Process>(result.getTotal(), list);
+        List<Map<String,Object>> list  = mapper.selectProcessForMaxVersion(process.getU9Coding(),process.getCustomer());
+        return new TableResultResponse<Map<String,Object>>(result.getTotal(), list);
+    }
+
+    public List<Map<String,Object>> selectProcessU9Conding(String u9Conding){
+       return mapper.selectProcessU9Conding(u9Conding);
     }
 }

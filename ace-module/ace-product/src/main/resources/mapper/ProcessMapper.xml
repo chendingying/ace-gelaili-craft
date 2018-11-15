@@ -1,59 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ace.product.mapper.ProcessMapper">
-    <resultMap id="BaseResultMap" type="com.ace.product.entity.Process">
-        <id column="id" jdbcType="INTEGER" property="id" />
-        <result column="u9_coding" jdbcType="VARCHAR" property="u9Coding" />
-        <result column="product_model" jdbcType="VARCHAR" property="productModel" />
-        <result column="customer" jdbcType="VARCHAR" property="customer" />
-        <result column="version" jdbcType="INTEGER" property="version" />
-        <result column="file_coding" jdbcType="VARCHAR" property="fileCoding" />
-        <result column="issue_coding" jdbcType="VARCHAR" property="issueCoding" />
-        <result column="issue_date" jdbcType="DATE" property="issueDate" />
-        <result column="update_date" jdbcType="DATE" property="updateDate" />
-        <result column="spraying_color" jdbcType="VARCHAR" property="sprayingColor" />
-        <result column="steel_seal" jdbcType="VARCHAR" property="steelSeal" />
-        <result column="move_seal" jdbcType="VARCHAR" property="moveSeal" />
-        <result column="pof_plastic_products" jdbcType="VARCHAR" property="pofPlasticProducts" />
-        <result column="box_plastic" jdbcType="VARCHAR" property="boxPlastic" />
-        <result column="case_plastic" jdbcType="VARCHAR" property="casePlastic" />
-        <result column="box1_label" jdbcType="VARCHAR" property="box1Label" />
-        <result column="box1_num" jdbcType="VARCHAR" property="box1Num" />
-        <result column="box2_label" jdbcType="VARCHAR" property="box2Label" />
-        <result column="box2_num" jdbcType="VARCHAR" property="box2Num" />
-        <result column="case1_label" jdbcType="VARCHAR" property="case1Label" />
-        <result column="case1_num" jdbcType="INTEGER" property="case1Num" />
-        <result column="case2_label" jdbcType="VARCHAR" property="case2Label" />
-        <result column="case2_num" jdbcType="INTEGER" property="case2Num" />
-        <result column="instructions" jdbcType="VARCHAR" property="instructions" />
-        <result column="qualified_certificate" jdbcType="VARCHAR" property="qualifiedCertificate" />
-        <result column="sealing_paste" jdbcType="VARCHAR" property="sealingPaste" />
-        <result column="packaging_tape" jdbcType="VARCHAR" property="packagingTape" />
-        <result column="packaging_tape_number" jdbcType="INTEGER" property="packagingTapeNumber" />
-        <result column="sealing_gummed_paper" jdbcType="VARCHAR" property="sealingGummedPaper" />
-        <result column="process1_picture_name" jdbcType="VARCHAR" property="process1PictureName" />
-        <result column="process2_picture_name" jdbcType="VARCHAR" property="process2PictureName" />
-        <result column="process3_picture_name" jdbcType="VARCHAR" property="process3PictureName" />
-        <result column="process4_picture_name" jdbcType="VARCHAR" property="process4PictureName" />
-        <result column="shell_fabric" jdbcType="VARCHAR" property="shellFabric" />
-        <result column="bed_charge" jdbcType="VARCHAR" property="bedCharge" />
-        <result column="box_number" jdbcType="VARCHAR" property="boxNumber" />
-        <result column="case_number" jdbcType="VARCHAR" property="caseNumber" />
-        <result column="child_thing_number" jdbcType="VARCHAR" property="childThingNumber" />
-        <result column="crt_time" jdbcType="DATE" property="crtTime" />
-        <result column="crt_user" jdbcType="VARCHAR" property="crtUser" />
-        <result column="crt_name" jdbcType="VARCHAR" property="crtName" />
-        <result column="crt_host" jdbcType="VARCHAR" property="crtHost" />
-        <result column="upd_time" jdbcType="DATE" property="updTime" />
-        <result column="upd_user" jdbcType="VARCHAR" property="updUser" />
-        <result column="upd_name" jdbcType="VARCHAR" property="updName" />
-        <result column="upd_host" jdbcType="VARCHAR" property="updHost" />
-    </resultMap>
-<select id="selectProcessForMaxVersion" resultMap="BaseResultMap">
-    select pro.* from product_process pro
+    <select id="selectProcessU9Conding" resultType="java.util.HashMap">
+        select pro.u9_coding as u9Coding,pro.product_model as productModel from product_process pro
+        where version = (select max(version) from product_process where u9_coding = pro.u9_coding)
+        and u9_coding like '%'+#{u9Coding, jdbcType=VARCHAR}+ '%'
+    </select>
+
+
+<select id="selectProcessForMaxVersion" resultType="java.util.HashMap">
+    select pro.id,pro.u9_coding,pro.product_model,pro.customer,pro.version,pro.file_coding,pro.box_number,pro.case_number from product_process pro
     where version = (select max(version) from product_process where u9_coding = pro.u9_coding)
     <if test="u9Coding != null">
-        and u9_coding  like '%'+#{u9Coding, jdbcType=VARCHAR}+'%'
+        and u9_coding = #{u9Coding, jdbcType=VARCHAR}
     </if>
     <if test="customer != null">
         and customer = #{customer, jdbcType=VARCHAR}

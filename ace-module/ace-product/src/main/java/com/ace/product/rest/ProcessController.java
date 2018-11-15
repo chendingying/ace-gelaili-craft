@@ -26,7 +26,7 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
      * @return
      */
     @GetMapping("/maxVersion")
-    public TableResultResponse<Process> selectProcessForMaxVersion(@RequestParam Map<String, Object> params){
+    public TableResultResponse<Map<String,Object>> selectProcessForMaxVersion(@RequestParam Map<String, Object> params){
         //查询列表数据
         Query query = new Query(params);
         Process process = new Process();
@@ -36,5 +36,15 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
             process.setU9Coding(params.get("u9Coding").toString());
         }
         return processBiz.selectProcessForMaxVersion(query,process);
+    }
+
+    /**
+     * 工艺信息编码模糊查询
+     * @param u9Conding
+     * @return
+     */
+    @GetMapping("/u9Conding/{u9Conding}")
+    public List<Map<String,Object>> selectProcessU9Conding(@PathVariable("u9Conding") String u9Conding){
+       return processBiz.selectProcessU9Conding(u9Conding);
     }
 }
