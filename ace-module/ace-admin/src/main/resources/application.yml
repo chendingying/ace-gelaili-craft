@@ -8,7 +8,8 @@ spring:
     jackson:
         date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8
-        default-property-inclusion: non_null
+        #设置空如何序列化
+        defaultPropertyInclusion: ALWAYS
         ##sqlserver
     datasource:
         url: jdbc:sqlserver://localhost:1433;DatabaseName=ag_admin_v1

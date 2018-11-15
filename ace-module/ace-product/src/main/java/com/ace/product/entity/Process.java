@@ -1,7 +1,9 @@
 package com.ace.product.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,6 +11,7 @@ import java.util.Date;
  */
 @Table(name = "product_process")
 public class Process {
+    @Id
     private Integer id;
 
     //u9 编码

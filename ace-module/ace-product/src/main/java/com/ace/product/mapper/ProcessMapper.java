@@ -1,10 +1,14 @@
 package com.ace.product.mapper;
 
 import com.ace.product.entity.Process;
+import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
 
 /**
  * Created by CDZ on 2018/11/15.
  */
 public interface ProcessMapper extends Mapper<Process> {
+    public List<Process> selectProcessForMaxVersion(@Param("u9Coding") String u9Coding,@Param("customer") String customer);
 }
