@@ -38,11 +38,6 @@ spring:
       jedis:
         pool:
             max-active: 20
-#  rabbitmq:
-#      host: ${RABBIT_MQ_HOST:localhost}
-#      port:  ${RABBIT_MQ_PORT:5672}
-#      username: guest
-#      password: guest
   sleuth:
     enabled: true
     http:
@@ -61,6 +56,7 @@ spring:
         - Path=/api/auth/**
         filters:
         - StripPrefix=2
+
       - id: ace-admin
         uri: lb://ace-admin
         order: 8001
@@ -69,6 +65,14 @@ spring:
         filters:
         - StripPrefix=2
 
+      - id: ace-product
+        uri: lb://ace-product
+        order: 8002
+        predicates:
+        - Path=/api/product/**
+        filters:
+        - StripPrefix=2
+   # =====================================
 
 logging:
   level:
