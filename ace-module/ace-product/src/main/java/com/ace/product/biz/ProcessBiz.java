@@ -29,7 +29,7 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
 
     public TableResultResponse<Map<String,Object>> selectProcessForMaxVersion(Query query,Process process){
         Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());
-        List<Map<String,Object>> list  = mapper.selectProcessForMaxVersion(process.getU9Coding(),process.getCustomer());
+        List<Map<String,Object>> list  = mapper.selectProcessForMaxVersion(process.getU9Coding(),process.getCustomer(),process.getStatus());
         return new TableResultResponse<Map<String,Object>>(result.getTotal(), list);
     }
 

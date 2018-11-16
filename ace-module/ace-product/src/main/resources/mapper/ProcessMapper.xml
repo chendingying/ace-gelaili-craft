@@ -10,12 +10,15 @@
 
 <select id="selectProcessForMaxVersion" resultType="java.util.HashMap">
     select pro.id,pro.u9_coding,pro.product_model,pro.customer,pro.version,pro.file_coding,pro.box_number,pro.case_number from product_process pro
-    where version = (select max(version) from product_process where u9_coding = pro.u9_coding)
+    where pro.version = (select max(version) from product_process where u9_coding = pro.u9_coding)
     <if test="u9Coding != null">
-        and u9_coding = #{u9Coding, jdbcType=VARCHAR}
+        and pro.u9_coding = #{u9Coding, jdbcType=VARCHAR}
     </if>
     <if test="customer != null">
-        and customer = #{customer, jdbcType=VARCHAR}
+        and pro.customer = #{customer, jdbcType=VARCHAR}
+    </if>
+    <if test="status != null">
+        and pro.status = #{status,jdbcType=INTEGER}
     </if>
 </select>
 </mapper>

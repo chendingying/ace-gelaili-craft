@@ -35,6 +35,8 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
             process.setCustomer(params.get("customer").toString());
         }if(params.get("u9Coding") != null){
             process.setU9Coding(params.get("u9Coding").toString());
+        }if(params.get("status") != null){
+            process.setStatus(Integer.valueOf(params.get("status").toString()));
         }
         return processBiz.selectProcessForMaxVersion(query,process);
     }

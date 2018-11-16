@@ -14,6 +14,10 @@ public class Process {
     @Id
     private Integer id;
 
+    //状态
+    @Column(name = "status")
+    private Integer status;
+
     //u9 编码
     @Column(name = "u9_coding")
     private String u9Coding;
@@ -193,6 +197,15 @@ public class Process {
     //最后更新人主机
     @Column(name = "upd_host")
     private String updHost;
+
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public Integer getId() {
         return id;
