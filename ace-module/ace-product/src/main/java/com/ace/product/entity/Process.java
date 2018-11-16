@@ -28,7 +28,7 @@ public class Process {
 
     //版本
     @Column(name = "version")
-    private String version;
+    private Integer version;
 
     //文件编码
     @Column(name = "file_coding")
@@ -226,11 +226,11 @@ public class Process {
         this.customer = customer;
     }
 
-    public String getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 

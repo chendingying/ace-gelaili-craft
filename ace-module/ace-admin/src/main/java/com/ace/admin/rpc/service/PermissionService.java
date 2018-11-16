@@ -13,6 +13,8 @@ import com.ace.api.vo.authority.PermissionInfo;
 import com.ace.api.vo.user.UserInfo;
 import com.ace.auth.client.jwt.UserAuthUtil;
 import com.ace.auth.common.constatns.CommonConstants;
+import com.ace.common.exception.BaseException;
+import com.ace.common.exception.auth.UserInvalidException;
 import com.ace.common.util.TreeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -20,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,8 +53,24 @@ public class PermissionService {
         return info;
     }
 
-    public UserInfo validate(String username, String password){
+    public UserInfo validate(String username, String password, String code, HttpServletRequest request) {
+        HttpSession session = request.getSession();
         UserInfo info = new UserInfo();
+
+        // 获取验证码的代码
+//        if (session.getAttribute("imageCode") == null) {
+//            throw new UserInvalidException("重新获取验证码!");
+//        } else {
+//            if (session.getAttribute("imageCode").toString().equalsIgnoreCase(code)) {
+//                User user = UsersBiz.getUserByUsername(username);
+//                if (encoder.matches(password, user.getPassword())) {
+//                    BeanUtils.copyProperties(user, info);
+//                    info.setId(user.getId().toString());
+//                }
+//            }else{
+//                throw new UserInvalidException("输入验证码错误!");
+//            }
+//        }
         User user = UsersBiz.getUserByUsername(username);
         if (encoder.matches(password, user.getPassword())) {
             BeanUtils.copyProperties(user, info);

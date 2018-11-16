@@ -15,6 +15,8 @@ import com.ace.common.exception.BaseException;
 import com.ace.common.msg.BaseResponse;
 import com.ace.common.msg.ObjectRestResponse;
 import com.ace.common.rest.BaseController;
+import com.ace.common.util.RandomValidateCodeUtil;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -22,7 +24,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.OutputStream;
 import java.util.List;
 
 @RestController
@@ -92,5 +99,22 @@ public class UserController extends BaseController<UserBiz,User> {
         user.setPassword(userResetPassword.getNewPassword());
         baseBiz.updateSelectiveById(user);
         return new ObjectRestResponse<User>().rel(true);
+    }
+
+    @ApiOperation("生成验证码")
+    @GetMapping("/getcode")
+    public void getCode(HttpServletResponse response, HttpServletRequest request) throws Exception{
+        HttpSession session=request.getSession();
+        //利用图片工具生成图片
+        //第一个参数是生成的验证码，第二个参数是生成的图片
+        Object[] objs = RandomValidateCodeUtil.createImage();
+        //将验证码存入Session
+        session.setAttribute("imageCode",objs[0]);
+
+        //将图片输出给浏览器
+        BufferedImage image = (BufferedImage) objs[1];
+        response.setContentType("image/png");
+        OutputStream os = response.getOutputStream();
+        ImageIO.write(image, "png", os);
     }
 }

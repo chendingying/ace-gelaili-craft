@@ -1,12 +1,14 @@
 package com.ace.product.biz;
 
 import com.ace.common.biz.BaseBiz;
+import com.ace.common.msg.ObjectRestResponse;
 import com.ace.common.msg.TableResultResponse;
 import com.ace.common.util.Query;
 import com.ace.product.entity.Process;
 import com.ace.product.mapper.ProcessMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +33,11 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         return new TableResultResponse<Map<String,Object>>(result.getTotal(), list);
     }
 
-    public List<Map<String,Object>> selectProcessU9Conding(String u9Conding){
-       return mapper.selectProcessU9Conding(u9Conding);
+    public ObjectRestResponse selectProcessU9Conding(String u9Conding){
+        ObjectRestResponse<Map<String,Object>> entityObjectRestResponse = new ObjectRestResponse<>();
+        List<Map<String,Object>> list = mapper.selectProcessU9Conding(u9Conding);
+        Map<String,Object> map = new HashedMap();
+        map.put("dataList",list);
+        return  entityObjectRestResponse.data(map);
     }
 }

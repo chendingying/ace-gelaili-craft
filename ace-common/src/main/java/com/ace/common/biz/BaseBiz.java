@@ -97,7 +97,12 @@ public abstract class BaseBiz<M extends Mapper<T>, T> {
         if(query.entrySet().size()>0) {
             Example.Criteria criteria = example.createCriteria();
             for (Map.Entry<String, Object> entry : query.entrySet()) {
-                criteria.andLike(entry.getKey(), "%" + entry.getValue().toString() + "%");
+                if(entry.getKey().equals("version")){
+                    criteria.andLike(entry.getKey(),entry.getValue().toString());
+                }else{
+                    criteria.andLike(entry.getKey(), "%" + entry.getValue().toString() + "%");
+                }
+
             }
         }
         Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());

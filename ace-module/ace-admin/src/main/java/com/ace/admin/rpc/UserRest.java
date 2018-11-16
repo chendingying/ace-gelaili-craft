@@ -7,6 +7,7 @@ import com.ace.cache.annotation.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +38,8 @@ public class UserRest {
 
     @RequestMapping(value = "/user/validate", method = RequestMethod.POST)
     public @ResponseBody
-    UserInfo validate(@RequestBody Map<String,String> body){
-        return permissionService.validate(body.get("username"),body.get("password"));
+    UserInfo validate(@RequestBody Map<String,String> body,HttpServletRequest request){
+        return permissionService.validate(body.get("username"),body.get("password"),body.get("code"), request);
     }
 
 
