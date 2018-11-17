@@ -57,10 +57,52 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
      * @param process
      * @return
      */
-    @PostMapping("/saveProcess")
+    @PostMapping("/save")
     @Transactional
     @ResponseBody
     public ObjectRestResponse saveProcess(@RequestBody Process process){
        return processBiz.saveProcess(process);
     }
+
+    /**
+     *
+     *
+     * 前端格式
+     {
+        "list":[
+                    {
+                        "id":"1",
+                        "status":0
+                    },
+                   {
+                        "id":"2",
+                        "status":0
+                    }
+              ]
+
+     }
+     批量作废
+     * @param
+     * @return
+     */
+    @PutMapping("/updateInvalid")
+    @ResponseBody
+    @Transactional
+    public ObjectRestResponse updateInvalid(@RequestBody Map<String,List> map) {
+        return processBiz.updateInvalid(map);
+    }
+
+    /**
+     * 恢复上一个版本
+     * @param id
+     * @return
+     */
+    @PutMapping("/updateRegain/{id}")
+    @Transactional
+    @ResponseBody
+    public ObjectRestResponse updateRegain(@PathVariable("id") Integer id) {
+        return processBiz.updateRegain(id);
+    }
+
+
 }

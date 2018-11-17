@@ -15,5 +15,11 @@ public interface ProcessMapper extends Mapper<Process> {
 
     public List<Map<String,Object>> selectProcessU9Conding(@Param("u9Coding")String u9Coding);
 
-    public String selectMaxVersionForU9Coding(@Param("u9Coding") String u9Coding);
+    public String selectMaxVersionForU9Coding(@Param("u9Coding") String u9Coding,@Param("id") Integer id);
+
+    public void updateInvalid(@Param("list") List<Map<String,Integer>> list);
+
+    public void updateRegainVersion(@Param("u9Coding") String u9Coding,@Param("version") String version);
+
+    public void updateInvalidVersion(@Param("id") Integer id,@Param("u9Coding") String u9Coding);
 }
