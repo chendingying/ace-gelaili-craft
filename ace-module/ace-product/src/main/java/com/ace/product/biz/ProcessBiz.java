@@ -5,6 +5,7 @@ import com.ace.common.exception.process.ProcessInvalidException;
 import com.ace.common.msg.ObjectRestResponse;
 import com.ace.common.msg.TableResultResponse;
 import com.ace.common.util.Query;
+import com.ace.common.util.VersionUtil;
 import com.ace.product.entity.Process;
 import com.ace.product.mapper.ProcessMapper;
 import com.github.pagehelper.Page;
@@ -46,10 +47,12 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
     }
 
     public ObjectRestResponse saveProcess(Process process){
-        Integer version = mapper.selectMaxVersionForU9Coding(process.getU9Coding());
-        if(process.getVersion() == null || process.getVersion() == 0) {
-            process.setVersion(1);
-        }if(version != null && version > 0 && version >= process.getVersion()) {
+        String version = mapper.selectMaxVersionForU9Coding(process.getU9Coding());
+        if(process.getVersion() == null || process.getVersion().equals("")) {
+            process.setVersion("1.0");
+        }
+        Integer compare = VersionUtil.compareVersion(version,process.getVersion());
+        if(compare != -1) {
             throw new ProcessInvalidException("产品编码：'"+ process.getU9Coding() +"' 的最新版本不能小于或等于当前版本,当前版本为："+ version);
         }
         baseBiz.insertSelective(process);

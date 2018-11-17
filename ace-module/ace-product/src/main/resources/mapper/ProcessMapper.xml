@@ -5,14 +5,14 @@
     <!--  模糊查询工艺型号-->
     <select id="selectProcessU9Conding" resultType="java.util.HashMap">
         select pro.u9_coding as u9Coding,pro.product_model as productModel from product_process pro
-        where version = (select max(version) from product_process where u9_coding = pro.u9_coding)
+        where version = (select max(version) from product_process where isnumeric(version)=1 and u9_coding = pro.u9_coding)
         and u9_coding like '%'+#{u9Coding, jdbcType=VARCHAR}+ '%'
     </select>
 
     <!-- 查询工艺信息 -->
     <select id="selectProcessForMaxVersion" resultType="java.util.HashMap">
         select pro.id,pro.u9_coding,pro.product_model,pro.customer,pro.version,pro.file_coding,pro.box_number,pro.case_number from product_process pro
-        where pro.version = (select max(version) from product_process where u9_coding = pro.u9_coding)
+        where pro.version = (select max(version) from product_process where isnumeric(version)=1 and u9_coding = pro.u9_coding)
         <if test="u9Coding != null">
             and pro.u9_coding = #{u9Coding, jdbcType=VARCHAR}
         </if>
@@ -25,7 +25,7 @@
     </select>
 
     <!-- u9Coding编码查询最新版本 -->
-    <select id="selectMaxVersionForU9Coding" resultType="Integer">
-        select max(version) version from product_process  where u9_coding = #{u9Coding, jdbcType=VARCHAR}
+    <select id="selectMaxVersionForU9Coding" resultType="java.lang.String">
+        select max(version) version from product_process where isnumeric(version)=1 and u9_coding = #{u9Coding, jdbcType=VARCHAR}
     </select>
 </mapper>
