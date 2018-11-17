@@ -7,6 +7,7 @@ import com.ace.common.util.Query;
 import com.ace.product.biz.ProcessBiz;
 import com.ace.product.entity.Process;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,5 +50,17 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
     @GetMapping("/u9Conding/{u9Conding}")
     public ObjectRestResponse selectProcessU9Conding(@PathVariable("u9Conding") String u9Conding){
        return processBiz.selectProcessU9Conding(u9Conding);
+    }
+
+    /**
+     * 手动新增工艺信息
+     * @param process
+     * @return
+     */
+    @PostMapping("/saveProcess")
+    @Transactional
+    @ResponseBody
+    public ObjectRestResponse saveProcess(@RequestBody Process process){
+       return processBiz.saveProcess(process);
     }
 }

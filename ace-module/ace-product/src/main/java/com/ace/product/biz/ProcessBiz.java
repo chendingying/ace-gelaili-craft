@@ -1,6 +1,7 @@
 package com.ace.product.biz;
 
 import com.ace.common.biz.BaseBiz;
+import com.ace.common.exception.process.ProcessInvalidException;
 import com.ace.common.msg.ObjectRestResponse;
 import com.ace.common.msg.TableResultResponse;
 import com.ace.common.util.Query;
@@ -27,6 +28,9 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
 
+    @Autowired
+    protected BaseBiz baseBiz;
+
     public TableResultResponse<Map<String,Object>> selectProcessForMaxVersion(Query query,Process process){
         Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());
         List<Map<String,Object>> list  = mapper.selectProcessForMaxVersion(process.getU9Coding(),process.getCustomer(),process.getStatus());
@@ -39,5 +43,16 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         Map<String,Object> map = new HashedMap();
         map.put("dataList",list);
         return  entityObjectRestResponse.data(map);
+    }
+
+    public ObjectRestResponse saveProcess(Process process){
+        Integer version = mapper.selectMaxVersionForU9Coding(process.getU9Coding());
+        if(process.getVersion() == null || process.getVersion() == 0) {
+            process.setVersion(1);
+        }if(version != null && version > 0 && version >= process.getVersion()) {
+            throw new ProcessInvalidException("产品编码：'"+ process.getU9Coding() +"' 的最新版本不能小于或等于当前版本,当前版本为："+ version);
+        }
+        baseBiz.insertSelective(process);
+        return new ObjectRestResponse<Process>();
     }
 }
