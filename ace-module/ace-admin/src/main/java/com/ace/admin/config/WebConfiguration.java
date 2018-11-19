@@ -55,7 +55,7 @@ public class WebConfiguration implements WebMvcConfigurer {
                 "/group/**",
                 "/groupType/**",
                 "/menu/**",
-                "/user/**",
+//                "/user/**",
                 "/api/permissions",
                 "/api/user/un/**"
         };

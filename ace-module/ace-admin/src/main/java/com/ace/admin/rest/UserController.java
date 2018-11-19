@@ -14,7 +14,9 @@ import com.ace.common.context.BaseContextHandler;
 import com.ace.common.exception.BaseException;
 import com.ace.common.msg.BaseResponse;
 import com.ace.common.msg.ObjectRestResponse;
+import com.ace.common.msg.TableResultResponse;
 import com.ace.common.rest.BaseController;
+import com.ace.common.util.Query;
 import com.ace.common.util.RandomValidateCodeUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("user")
@@ -43,6 +46,13 @@ public class UserController extends BaseController<UserBiz,User> {
     @Autowired
     private UserAuthUtil userAuthUtil;
 
+    @RequestMapping(value = "/query",method = RequestMethod.GET)
+    @ResponseBody
+    public TableResultResponse<Map<String,Object>> selectUser(@RequestParam Map<String, Object> params){
+        //查询列表数据
+        Query query = new Query(params);
+        return baseBiz.selectUser(query);
+    }
 
     @RequestMapping(value = "/front/info", method = RequestMethod.GET)
     @ResponseBody

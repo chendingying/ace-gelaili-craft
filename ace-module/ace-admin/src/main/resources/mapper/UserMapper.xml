@@ -45,4 +45,10 @@
     left join  base_group_leader gm
     on gm.user_id = u.id where gm.group_id = #{groupId}
   </select>
+
+  <select id="selectUser" resultType="java.util.HashMap">
+    select u.id as id,u.name as name,l.group_name as groupName,u.tel_phone as phone,u.status as status from base_user u
+    left join (select l.user_id,g.name group_name from base_group_leader l,base_group g where l.group_id = g.id) l
+    on u.id = l.user_id
+  </select>
 </mapper>

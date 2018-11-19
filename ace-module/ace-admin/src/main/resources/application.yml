@@ -8,6 +8,7 @@ spring:
     jackson:
         date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8
+#        default-property-inclusion: non_null
         #设置空如何序列化
         defaultPropertyInclusion: ALWAYS
         ##sqlserver
@@ -69,6 +70,8 @@ sample:
     enabled: false
 
 mybatis:
+    configuration:
+      call-setters-on-nulls: true
     basepackage: com.ace.admin.mapper
     xmlLocation: classpath:mapper/**/*.xml
     mapper-locations: "classpath*:mapper/*.xml"

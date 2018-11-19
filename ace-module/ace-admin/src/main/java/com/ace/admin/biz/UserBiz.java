@@ -9,10 +9,17 @@ import com.ace.cache.annotation.Cache;
 import com.ace.cache.annotation.CacheClear;
 import com.ace.common.biz.BaseBiz;
 import com.ace.common.constant.UserConstant;
+import com.ace.common.msg.TableResultResponse;
+import com.ace.common.util.Query;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -45,6 +52,12 @@ public class UserBiz extends BaseBiz<UserMapper,User> {
         User user = new User();
         user.setUsername(username);
         return mapper.selectOne(user);
+    }
+
+    public TableResultResponse<Map<String,Object>> selectUser(Query query){
+        Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());
+        List<Map<String,Object>> list  = mapper.selectUser();
+        return new TableResultResponse<Map<String,Object>>(result.getTotal(), list);
     }
 
 
