@@ -6,10 +6,13 @@ import com.ace.common.rest.BaseController;
 import com.ace.common.util.Query;
 import com.ace.product.biz.ProcessBiz;
 import com.ace.product.entity.Process;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -104,5 +107,15 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
         return processBiz.updateRegain(id);
     }
 
+    /**
+     * Excel 导入
+     * @return
+     */
+    @PostMapping("/excelInport")
+    @ResponseBody
+    public ObjectRestResponse ExcelInport() throws IOException, InvalidFormatException {
+        String path = "D:\\工艺信息导入模板.xlsx";
+        return processBiz.ExcelInport(path);
+    }
 
 }

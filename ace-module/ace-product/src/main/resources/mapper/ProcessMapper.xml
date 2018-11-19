@@ -59,4 +59,46 @@
     <update id="updateInvalidVersion">
       update product_process set status = 0 where id = #{id,jdbcType=INTEGER} and u9_coding = #{u9Coding, jdbcType=VARCHAR}
     </update>
+
+    <!--批量添加 -->
+    <insert id="insertProcessList" parameterType="java.util.List"  useGeneratedKeys="true">
+        INSERT INTO product_process(u9_coding,product_model,customer,version,file_coding,issue_date,update_date,spraying_color,steel_seal,move_seal,pof_plastic_products,box_plastic,case_plastic,box1_label,box1_num,box2_label,box2_num,case1_label,case1_num,case2_label,case2_num,instructions,qualified_certificate,sealing_paste,packaging_tape,packaging_tape_number,sealing_gummed_paper,process1_picture_name,process2_picture_name,process3_picture_name,process4_picture_name)
+        values
+        <foreach collection="list" item="params" index="index"
+                 separator=",">
+            (
+            #{params.u9Coding,jdbcType=VARCHAR},
+            #{params.productModel,jdbcType=VARCHAR},
+            #{params.customer,jdbcType=VARCHAR},
+            #{params.version,jdbcType=VARCHAR},
+            #{params.fileCoding,jdbcType=VARCHAR},
+            #{params.issueDate,jdbcType=DATE},
+            #{params.updateDate,jdbcType=DATE},
+            #{params.sprayingColor,jdbcType=VARCHAR},
+            #{params.steelSeal,jdbcType=VARCHAR},
+            #{params.moveSeal,jdbcType=VARCHAR},
+            #{params.pofPlasticProducts,jdbcType=VARCHAR},
+            #{params.boxPlastic,jdbcType=VARCHAR},
+            #{params.casePlastic,jdbcType=VARCHAR},
+            #{params.box1Label,jdbcType=VARCHAR},
+            #{params.box1Num,jdbcType=INTEGER},
+            #{params.box2Label,jdbcType=VARCHAR},
+            #{params.box2Num,jdbcType=INTEGER},
+            #{params.case1Label,jdbcType=VARCHAR},
+            #{params.case1Num,jdbcType=INTEGER},
+            #{params.case2Label,jdbcType=VARCHAR},
+            #{params.case2Num,jdbcType=INTEGER},
+            #{params.instructions,jdbcType=VARCHAR},
+            #{params.qualifiedCertificate,jdbcType=VARCHAR},
+            #{params.sealingPaste,jdbcType=VARCHAR},
+            #{params.packagingTape,jdbcType=VARCHAR},
+            #{params.packagingTapeNumber,jdbcType=INTEGER},
+            #{params.sealingGummedPaper,jdbcType=VARCHAR},
+            #{params.process1PictureName,jdbcType=VARCHAR},
+            #{params.process2PictureName,jdbcType=VARCHAR},
+            #{params.process3PictureName,jdbcType=VARCHAR},
+            #{params.process4PictureName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
 </mapper>

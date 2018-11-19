@@ -8,14 +8,19 @@ import com.ace.common.util.Query;
 import com.ace.common.util.VersionUtil;
 import com.ace.product.entity.Process;
 import com.ace.product.mapper.ProcessMapper;
+import com.ace.product.vo.ExcelTool;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import net.sf.json.JSONArray;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,6 +70,17 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         }
         mapper.updateRegainVersion(process.getU9Coding(),version);
         mapper.updateInvalidVersion(process.getId(),process.getU9Coding());
+        return new ObjectRestResponse<Process>();
+    }
+
+    public ObjectRestResponse ExcelInport(String path) throws IOException, InvalidFormatException {
+        if(path == null || path.equals("")){
+            throw new ProcessInvalidException("路径不能为空");
+        }
+        File f1 = new File(path);
+        JSONArray jsonArray =  ExcelTool.readExcel(f1);
+        List<Process> processList = jsonArray;
+        mapper.insertProcessList(processList);
         return new ObjectRestResponse<Process>();
     }
 

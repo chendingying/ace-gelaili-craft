@@ -22,4 +22,6 @@ public interface ProcessMapper extends Mapper<Process> {
     public void updateRegainVersion(@Param("u9Coding") String u9Coding,@Param("version") String version);
 
     public void updateInvalidVersion(@Param("id") Integer id,@Param("u9Coding") String u9Coding);
+
+    public void insertProcessList(List<Process> list);
 }
