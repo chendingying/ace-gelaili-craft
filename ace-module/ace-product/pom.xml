@@ -12,6 +12,14 @@
     <artifactId>ace-product</artifactId>
 
     <dependencies>
+
+        <!-- 加入上传文件组件 -->
+        <!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.3</version>
+        </dependency>
         <!-- Poi（解析Excle表格用） -->
         <dependency>
             <groupId>org.apache.poi</groupId>

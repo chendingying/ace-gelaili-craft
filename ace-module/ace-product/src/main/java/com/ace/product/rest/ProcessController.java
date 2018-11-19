@@ -5,6 +5,7 @@ import com.ace.common.msg.TableResultResponse;
 import com.ace.common.rest.BaseController;
 import com.ace.common.util.Query;
 import com.ace.product.biz.ProcessBiz;
+import com.ace.product.biz.UpLoadBiz;
 import com.ace.product.entity.Process;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
     @Autowired
     ProcessBiz processBiz;
 
+    @Autowired
+    UpLoadBiz upLoadBiz;
     /**
      * 工艺信息查询（仅列出最新版本的列表）
      * @param params
@@ -118,4 +121,14 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
         return processBiz.ExcelInport(path);
     }
 
+    //ftp处理文件上传
+    @RequestMapping(value="/ftpuploadimg", method = RequestMethod.POST)
+    public @ResponseBody String uploadImg() throws IOException {
+
+        String filePath="D:\\马.jpg";
+
+        upLoadBiz.upLoadImg(filePath);
+
+        return  filePath;  //该路径图片名称，前端框架可用ngnix指定的路径+filePath,即可访问到ngnix图片服务器中的图片
+    }
 }

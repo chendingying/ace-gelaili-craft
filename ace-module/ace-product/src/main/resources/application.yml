@@ -1,3 +1,8 @@
+ftpAddress: 192.168.249.211
+ftpPort: 21
+ftpName: ftpuser
+ftpPassWord: 123456
+ftpBasePath: /
 logging:
     level:
 #        tk.mybatis: DEBUG
