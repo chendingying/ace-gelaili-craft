@@ -1,6 +1,6 @@
 package com.ace.product.biz;
 
-import com.ace.product.vo.FtpFileUtil;
+import com.ace.product.vo.FtpDownLoad;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +14,11 @@ import java.io.InputStream;
 @Service
 public class UpLoadBiz {
 
-    public void upLoadImg(String path) {
-        // TODO Auto-generated method stub
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(path);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        Boolean flag = FtpFileUtil.uploadFile(path, inputStream);
-        if (flag == true) {
-            System.out.println("ftp上传成功！");
-        }
+    public boolean upLoadImg(String filename,InputStream inputStream) {
+        return FtpDownLoad.uploadFile(filename,inputStream);
+//        Boolean flag = FtpFileUtil.uploadFile(path, inputStream);
+//        if (flag == true) {
+//            System.out.println("ftp上传成功！");
+//        }
     }
 }

@@ -13,7 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -126,8 +129,15 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
     public @ResponseBody String uploadImg() throws IOException {
 
         String filePath="D:\\马.jpg";
-
-        upLoadBiz.upLoadImg(filePath);
+        // TODO Auto-generated method stub
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(filePath);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        upLoadBiz.upLoadImg("马.jpg",inputStream);
 
         return  filePath;  //该路径图片名称，前端框架可用ngnix指定的路径+filePath,即可访问到ngnix图片服务器中的图片
     }

@@ -30,13 +30,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(JwtAuthenticationRequest authenticationRequest,HttpServletRequest request) throws Exception {
-        HttpSession session = request.getSession();
+    public String login(JwtAuthenticationRequest authenticationRequest,HttpSession session) throws Exception {
         // 获取验证码的代码
-        if (session.getAttribute("imageCode") == null) {
+        if (session.getAttribute("image") == null) {
             throw new UserInvalidException("重新获取验证码!");
         } else {
-            if (session.getAttribute("imageCode").toString().equalsIgnoreCase(authenticationRequest.getCode())) {
+            if (session.getAttribute("image").toString().equalsIgnoreCase(authenticationRequest.getCode())) {
                 UserInfo info = userService.validate(authenticationRequest);
                 if (!StringUtils.isEmpty(info.getId())) {
                     return jwtTokenUtil.generateToken(new JWTInfo(info.getUsername(), info.getId() + "", info.getName()));

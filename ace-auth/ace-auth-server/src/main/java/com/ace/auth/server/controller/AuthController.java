@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,9 +33,9 @@ public class AuthController {
 
     @RequestMapping(value = "token", method = RequestMethod.POST)
     public ObjectRestResponse<String> createAuthenticationToken(
-            @RequestBody JwtAuthenticationRequest authenticationRequest,HttpServletRequest request) throws Exception {
+            @RequestBody JwtAuthenticationRequest authenticationRequest,HttpSession  session) throws Exception {
         log.info(authenticationRequest.getUsername()+" require logging...");
-        final String token = authService.login(authenticationRequest,request);
+        final String token = authService.login(authenticationRequest,session);
         return new ObjectRestResponse<>().data(token);
     }
 
@@ -60,8 +61,13 @@ public class AuthController {
         //第一个参数是生成的验证码，第二个参数是生成的图片
         Object[] objs = RandomValidateCodeUtil.createImage();
         //将验证码存入Session
-        session.setAttribute("imageCode",objs[0]);
-
+        session.setAttribute("image",objs[0]);
+//        //自己把SessionID保存在cookie中
+//        Cookie cookie=new Cookie("JSESSIONID", session.getId());
+//        //设置cookie保存时间
+//        cookie.setMaxAge(60*20);
+//        //被创建的cookie返回浏览器
+//        response.addCookie(cookie);
         //将图片输出给浏览器
         BufferedImage image = (BufferedImage) objs[1];
         response.setContentType("image/png");
