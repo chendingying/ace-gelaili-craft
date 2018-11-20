@@ -38,9 +38,9 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
         //查询列表数据
         Query query = new Query(params);
         Process process = new Process();
-        if(params.get("customer") != null){
+        if(params.get("customer") != null && !params.get("customer").equals("")){
             process.setCustomer(params.get("customer").toString());
-        }if(params.get("u9Coding") != null){
+        }if(params.get("u9Coding") != null && !params.get("u9Coding").equals("")){
             process.setU9Coding(params.get("u9Coding").toString());
         }if(params.get("status") != null){
             process.setStatus(Integer.valueOf(params.get("status").toString()));

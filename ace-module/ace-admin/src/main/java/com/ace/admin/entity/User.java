@@ -10,6 +10,8 @@ public class User {
     @Id
     private Integer id;
 
+    private Integer status;
+
     private String username;
 
     private String password;
@@ -73,6 +75,15 @@ public class User {
     private String attr7;
 
     private String attr8;
+
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     /**
      * @return id

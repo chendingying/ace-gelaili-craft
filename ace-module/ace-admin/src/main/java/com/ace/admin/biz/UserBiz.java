@@ -54,9 +54,9 @@ public class UserBiz extends BaseBiz<UserMapper,User> {
         return mapper.selectOne(user);
     }
 
-    public TableResultResponse<Map<String,Object>> selectUser(Query query){
+    public TableResultResponse<Map<String,Object>> selectUser(Query query,User user){
         Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());
-        List<Map<String,Object>> list  = mapper.selectUser();
+        List<Map<String,Object>> list  = mapper.selectUser(user.getUsername(),user.getName(),user.getTelPhone(),user.getStatus());
         return new TableResultResponse<Map<String,Object>>(result.getTotal(), list);
     }
 

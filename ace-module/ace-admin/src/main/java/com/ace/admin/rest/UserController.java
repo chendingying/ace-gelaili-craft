@@ -3,6 +3,7 @@ package com.ace.admin.rest;
 
 import com.ace.admin.biz.MenuBiz;
 import com.ace.admin.biz.UserBiz;
+import com.ace.admin.constant.AdminCommonConstant;
 import com.ace.admin.entity.Menu;
 import com.ace.admin.entity.User;
 import com.ace.admin.entity.UserResetPassword;
@@ -51,7 +52,17 @@ public class UserController extends BaseController<UserBiz,User> {
     public TableResultResponse<Map<String,Object>> selectUser(@RequestParam Map<String, Object> params){
         //查询列表数据
         Query query = new Query(params);
-        return baseBiz.selectUser(query);
+        User user = new User();
+        if(params.get("userName") != null && !params.get("telPhone").equals("")){
+            user.setUsername(params.get("userName").toString());
+        }if(params.get("name") != null && !params.get("telPhone").equals("")){
+            user.setName(params.get("name").toString());
+        }if(params.get("telPhone") != null && !params.get("telPhone").equals("")){
+            user.setTelPhone(params.get("telPhone").toString());
+        }if(params.get("status") != null){
+            user.setStatus(Integer.valueOf(params.get("status").toString()));
+        }
+        return baseBiz.selectUser(query,user);
     }
 
     @RequestMapping(value = "/front/info", method = RequestMethod.GET)
@@ -75,6 +86,23 @@ public class UserController extends BaseController<UserBiz,User> {
     public @ResponseBody
     List<Menu> getAllMenus() throws Exception {
         return menuBiz.selectListAll();
+    }
+
+    /**
+     * 修改用户状态
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/updateStatus/{id}",method = RequestMethod.PUT)
+    public ObjectRestResponse<User> updateStatus(@PathVariable("id") Integer id){
+        User user = baseBiz.selectById(id);
+        if(user.getStatus() == AdminCommonConstant.BOOLEAN_NUMBER_FALSE){
+            user.setStatus(AdminCommonConstant.BOOLEAN_NUMBER_TRUE);
+        } else {
+            user.setStatus(AdminCommonConstant.BOOLEAN_NUMBER_FALSE);
+        }
+        baseBiz.updateSelectiveById(user);
+        return new ObjectRestResponse<User>();
     }
 
     /**

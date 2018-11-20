@@ -26,8 +26,8 @@ public class AdminCommonConstant {
 
     public final static String RESOURCE_ACTION_VISIT = "访问";
 
-    public final static String BOOLEAN_NUMBER_FALSE = "0";
+    public final static Integer BOOLEAN_NUMBER_FALSE = 0;
 
-    public final static String BOOLEAN_NUMBER_TRUE = "1";
+    public final static Integer BOOLEAN_NUMBER_TRUE = 1;
 
 }
