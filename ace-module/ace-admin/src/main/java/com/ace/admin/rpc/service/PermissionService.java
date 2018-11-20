@@ -53,24 +53,8 @@ public class PermissionService {
         return info;
     }
 
-    public UserInfo validate(String username, String password, String code, HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public UserInfo validate(String username, String password) {
         UserInfo info = new UserInfo();
-
-        // 获取验证码的代码
-//        if (session.getAttribute("imageCode") == null) {
-//            throw new UserInvalidException("重新获取验证码!");
-//        } else {
-//            if (session.getAttribute("imageCode").toString().equalsIgnoreCase(code)) {
-//                User user = UsersBiz.getUserByUsername(username);
-//                if (encoder.matches(password, user.getPassword())) {
-//                    BeanUtils.copyProperties(user, info);
-//                    info.setId(user.getId().toString());
-//                }
-//            }else{
-//                throw new UserInvalidException("输入验证码错误!");
-//            }
-//        }
         User user = UsersBiz.getUserByUsername(username);
         if (encoder.matches(password, user.getPassword())) {
             BeanUtils.copyProperties(user, info);

@@ -38,8 +38,8 @@ public class UserRest {
 
     @RequestMapping(value = "/user/validate", method = RequestMethod.POST)
     public @ResponseBody
-    UserInfo validate(@RequestBody Map<String,String> body,HttpServletRequest request){
-        return permissionService.validate(body.get("username"),body.get("password"),body.get("code"), request);
+    UserInfo validate(@RequestBody Map<String,String> body){
+        return permissionService.validate(body.get("username"),body.get("password"));
     }
 
 

@@ -7,9 +7,13 @@ import com.ace.auth.server.service.AuthService;
 import com.ace.auth.server.util.user.JwtAuthenticationRequest;
 import com.ace.auth.server.util.user.JwtTokenUtil;
 import com.ace.common.exception.auth.UserInvalidException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -26,10 +30,20 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(JwtAuthenticationRequest authenticationRequest) throws Exception {
-        UserInfo info = userService.validate(authenticationRequest);
-        if (!StringUtils.isEmpty(info.getId())) {
-            return jwtTokenUtil.generateToken(new JWTInfo(info.getUsername(), info.getId() + "", info.getName()));
+    public String login(JwtAuthenticationRequest authenticationRequest,HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+        // 获取验证码的代码
+        if (session.getAttribute("imageCode") == null) {
+            throw new UserInvalidException("重新获取验证码!");
+        } else {
+            if (session.getAttribute("imageCode").toString().equalsIgnoreCase(authenticationRequest.getCode())) {
+                UserInfo info = userService.validate(authenticationRequest);
+                if (!StringUtils.isEmpty(info.getId())) {
+                    return jwtTokenUtil.generateToken(new JWTInfo(info.getUsername(), info.getId() + "", info.getName()));
+                }
+            }else{
+                throw new UserInvalidException("输入验证码错误!");
+            }
         }
         throw new UserInvalidException("用户不存在或账户密码错误!");
     }

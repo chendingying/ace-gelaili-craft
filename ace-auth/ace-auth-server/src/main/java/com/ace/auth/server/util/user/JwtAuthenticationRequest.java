@@ -8,11 +8,13 @@ public class JwtAuthenticationRequest implements Serializable {
 
     private String username;
     private String password;
+    private String code;
 
 
-    public JwtAuthenticationRequest(String username, String password) {
+    public JwtAuthenticationRequest(String username, String password,String code) {
         this.username = username;
         this.password = password;
+        this.code = code;
     }
 
     public JwtAuthenticationRequest() {
@@ -32,5 +34,13 @@ public class JwtAuthenticationRequest implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

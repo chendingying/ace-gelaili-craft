@@ -4,17 +4,21 @@ package com.ace.auth.server.controller;
 import com.ace.auth.server.service.AuthService;
 import com.ace.auth.server.util.user.JwtAuthenticationRequest;
 import com.ace.common.msg.ObjectRestResponse;
+import com.ace.common.util.RandomValidateCodeUtil;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.OutputStream;
 
 @RestController
 @RequestMapping("jwt")
@@ -28,9 +32,9 @@ public class AuthController {
 
     @RequestMapping(value = "token", method = RequestMethod.POST)
     public ObjectRestResponse<String> createAuthenticationToken(
-            @RequestBody JwtAuthenticationRequest authenticationRequest) throws Exception {
+            @RequestBody JwtAuthenticationRequest authenticationRequest,HttpServletRequest request) throws Exception {
         log.info(authenticationRequest.getUsername()+" require logging...");
-        final String token = authService.login(authenticationRequest);
+        final String token = authService.login(authenticationRequest,request);
         return new ObjectRestResponse<>().data(token);
     }
 
@@ -46,5 +50,22 @@ public class AuthController {
     public ObjectRestResponse<?> verify(String token) throws Exception {
         authService.validate(token);
         return new ObjectRestResponse<>();
+    }
+
+    @ApiOperation("生成验证码")
+    @GetMapping("/getcode")
+    public void getCode(HttpServletResponse response, HttpServletRequest request) throws Exception{
+        HttpSession session=request.getSession();
+        //利用图片工具生成图片
+        //第一个参数是生成的验证码，第二个参数是生成的图片
+        Object[] objs = RandomValidateCodeUtil.createImage();
+        //将验证码存入Session
+        session.setAttribute("imageCode",objs[0]);
+
+        //将图片输出给浏览器
+        BufferedImage image = (BufferedImage) objs[1];
+        response.setContentType("image/png");
+        OutputStream os = response.getOutputStream();
+        ImageIO.write(image, "png", os);
     }
 }
