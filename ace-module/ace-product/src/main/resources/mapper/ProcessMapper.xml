@@ -11,13 +11,13 @@
 
     <!-- 查询工艺信息 -->
     <select id="selectProcessForMaxVersion" resultType="java.util.HashMap">
-        select pro.id,pro.u9_coding,pro.product_model,pro.customer,pro.version,pro.file_coding,pro.box_number,pro.case_number from product_process pro
+        select pro.status as status, pro.id as id,pro.u9_coding as u9Coding,pro.product_model as productModel,pro.customer,pro.version,pro.file_coding as fileCoding,pro.box_number as boxNumber,pro.case_number as caseNumber from product_process pro
         where pro.version = (select max(version) from product_process where isnumeric(version)=1 and u9_coding = pro.u9_coding)
         <if test="u9Coding != null">
-            and pro.u9_coding = #{u9Coding, jdbcType=VARCHAR}
+            and pro.u9_coding LIKE '%' + #{u9Coding, jdbcType=VARCHAR} + '%'
         </if>
         <if test="customer != null">
-            and pro.customer = #{customer, jdbcType=VARCHAR}
+            and pro.customer LIKE '%' + #{customer, jdbcType=VARCHAR} + '%'
         </if>
         <if test="status != null">
             and pro.status = #{status,jdbcType=INTEGER}

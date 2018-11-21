@@ -1,11 +1,4 @@
 
-ftp:
-  host: 192.168.249.211
-  port: 21
-  username: ftpuser
-  password: 123456
-  basePath: /pub
-  filePath:
 logging:
     level:
 #        tk.mybatis: DEBUG
@@ -24,7 +17,7 @@ spring:
         url: jdbc:sqlserver://localhost:1433;DatabaseName=ag_product_v1
         driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
         username: sa
-        password: 123456
+        password: Cdy123456
         initial-size: 1
         min-idle: 1
         max-active: 20
@@ -72,6 +65,8 @@ spring:
       http:
         legacy:
           enabled: true
+    messages:
+      encoding: UTF-8
 sample:
   zipkin:
     # When enabled=false, traces log to the console. Comment to send to zipkin

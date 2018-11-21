@@ -17,16 +17,12 @@ public class UpLoadBiz {
 
     @Autowired
     FtpDownLoad ftpDownLoad;
-    public boolean upLoadImg(String filename,InputStream inputStream) {
 
+    public boolean upLoadImg(String filename,InputStream inputStream) {
         return ftpDownLoad.uploadFile(filename,inputStream);
-//        Boolean flag = FtpFileUtil.uploadFile(path, inputStream);
-//        if (flag == true) {
-//            System.out.println("ftp上传成功！");
-//        }
     }
 
-    public boolean inPort(String localPath){
+    public boolean Ftpdownload(String localPath){
         return ftpDownLoad.downloadFile(localPath);
     }
 }

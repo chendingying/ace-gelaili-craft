@@ -5,6 +5,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -22,6 +23,7 @@ import java.io.*;
  * Created by CDZ on 2018/11/20.
  */
 @Component
+@PropertySource({"classpath:ftp.properties"})
 public class FtpDownLoad {
 //    /**
 //     * Description: 向FTP服务器上传文件
@@ -112,13 +114,13 @@ public class FtpDownLoad {
 
      * @return
      */
-    public static boolean downloadFile(String localPath) {
+    public boolean downloadFile(String localPath) {
 
-        String host = "192.168.249.211";
-        Integer port = 21;
-        String username = "ftpuser";
-        String password = "123456";
-        String remotePath ="/pub";
+//        String host = "192.168.249.211";
+//        Integer port = 21;
+//        String username = "ftpuser";
+//        String password = "123456";
+//        String remotePath ="/pub";
         String fileName = "工艺信息导入模板.xlsx";
         boolean result = false;
         FTPClient ftp = new FTPClient();
@@ -132,7 +134,7 @@ public class FtpDownLoad {
                 ftp.disconnect();
                 return result;
             }
-            ftp.changeWorkingDirectory(remotePath);// 转移到FTP服务器目录
+            ftp.changeWorkingDirectory(basePath);// 转移到FTP服务器目录
             FTPFile[] fs = ftp.listFiles();
             for (FTPFile ff : fs) {
                 //创建本地的文件时候要把编码格式转回来
@@ -144,7 +146,6 @@ public class FtpDownLoad {
                     is.close();
                 }
             }
-
             ftp.logout();
             result = true;
         } catch (IOException e) {
@@ -165,7 +166,7 @@ public class FtpDownLoad {
 //            FileInputStream in=new FileInputStream(new File("D:\\马.jpg"));
 //            boolean flag = uploadFile("马.jpg",in);
 //            System.out.println(flag);
-            downloadFile("D:\\");
+//            downloadFile("D:\\");
         } catch (Exception e) {
             e.printStackTrace();
         }

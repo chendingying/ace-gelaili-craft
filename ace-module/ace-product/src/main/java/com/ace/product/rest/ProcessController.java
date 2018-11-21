@@ -124,16 +124,16 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
         return processBiz.ExcelInport(path);
     }
 
-    @RequestMapping(value="/ftpImport", method = RequestMethod.POST)
-    public @ResponseBody String Import(){
+    // ftp下载模板
+    @RequestMapping(value="/ftpDownload", method = RequestMethod.POST)
+    public @ResponseBody boolean Ftpdownload(){
         String localPath = "D:\\";
-        upLoadBiz.inPort(localPath);
-        return  localPath;  //该路径图片名称，前端框架可用ngnix指定的路径+filePath,即可访问到ngnix图片服务器中的图片
+        return upLoadBiz.Ftpdownload(localPath);
     }
 
     //ftp处理文件上传
-    @RequestMapping(value="/ftpuploadimg", method = RequestMethod.POST)
-    public @ResponseBody String uploadImg() throws IOException {
+    @RequestMapping(value="/ftpUploadImg", method = RequestMethod.POST)
+    public @ResponseBody boolean uploadImg() throws IOException {
 
         String filePath="D:\\马.jpg";
         // TODO Auto-generated method stub
@@ -144,8 +144,6 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        upLoadBiz.upLoadImg("马.jpg",inputStream);
-
-        return  filePath;  //该路径图片名称，前端框架可用ngnix指定的路径+filePath,即可访问到ngnix图片服务器中的图片
+       return upLoadBiz.upLoadImg("马.jpg",inputStream);
     }
 }
