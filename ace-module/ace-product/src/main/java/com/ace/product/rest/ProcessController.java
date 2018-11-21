@@ -124,6 +124,13 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
         return processBiz.ExcelInport(path);
     }
 
+    @RequestMapping(value="/ftpImport", method = RequestMethod.POST)
+    public @ResponseBody String Import(){
+        String localPath = "D:\\";
+        upLoadBiz.inPort(localPath);
+        return  localPath;  //该路径图片名称，前端框架可用ngnix指定的路径+filePath,即可访问到ngnix图片服务器中的图片
+    }
+
     //ftp处理文件上传
     @RequestMapping(value="/ftpuploadimg", method = RequestMethod.POST)
     public @ResponseBody String uploadImg() throws IOException {

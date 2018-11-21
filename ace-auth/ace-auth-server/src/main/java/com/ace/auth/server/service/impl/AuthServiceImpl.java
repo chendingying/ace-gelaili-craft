@@ -31,18 +31,23 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String login(JwtAuthenticationRequest authenticationRequest,HttpSession session) throws Exception {
-        // 获取验证码的代码
-        if (session.getAttribute("image") == null) {
-            throw new UserInvalidException("重新获取验证码!");
-        } else {
-            if (session.getAttribute("image").toString().equalsIgnoreCase(authenticationRequest.getCode())) {
-                UserInfo info = userService.validate(authenticationRequest);
-                if (!StringUtils.isEmpty(info.getId())) {
-                    return jwtTokenUtil.generateToken(new JWTInfo(info.getUsername(), info.getId() + "", info.getName()));
-                }
-            }else{
-                throw new UserInvalidException("输入验证码错误!");
-            }
+//        // 获取验证码的代码
+//        if (session.getAttribute("image") == null) {
+//            throw new UserInvalidException("重新获取验证码!");
+//        } else {
+//            if (session.getAttribute("image").toString().equalsIgnoreCase(authenticationRequest.getCode())) {
+//                UserInfo info = userService.validate(authenticationRequest);
+//                if (!StringUtils.isEmpty(info.getId())) {
+//                    return jwtTokenUtil.generateToken(new JWTInfo(info.getUsername(), info.getId() + "", info.getName()));
+//                }
+//            }else{
+//                throw new UserInvalidException("输入验证码错误!");
+//            }
+//        }
+
+        UserInfo info = userService.validate(authenticationRequest);
+        if (!StringUtils.isEmpty(info.getId())) {
+            return jwtTokenUtil.generateToken(new JWTInfo(info.getUsername(), info.getId() + "", info.getName()));
         }
         throw new UserInvalidException("用户不存在或账户密码错误!");
     }

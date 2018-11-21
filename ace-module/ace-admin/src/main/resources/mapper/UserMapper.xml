@@ -47,18 +47,18 @@
   </select>
 
   <select id="selectUser" resultType="java.util.HashMap">
-    select u.id as id,u.name as name,l.group_name as groupName,u.tel_phone as phone,u.status as status from base_user u
+    select u.id as id,u.name as name,u.username as userName,l.group_name as groupName,u.tel_phone as phone,u.status as status from base_user u
     left join (select l.user_id,g.name group_name from base_group_leader l,base_group g where l.group_id = g.id) l
     on u.id = l.user_id
     where 1=1
     <if test="userName != null">
-      and username = #{userName}
+      and username LIKE '%' + #{userName} + '%'
     </if>
     <if test="name != null">
-      and name = #{name}
+      and name LIKE  '%' + #{name} + '%'
     </if>
-    <if test="telPhone != null">
-      and tel_phone = #{telPhone}
+    <if test="phone != null">
+      and tel_phone LIKE '%' + #{phone} + '%'
     </if>
     <if test="status != null">
       and status = #{status}

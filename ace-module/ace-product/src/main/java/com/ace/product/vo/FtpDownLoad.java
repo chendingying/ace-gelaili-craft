@@ -37,24 +37,24 @@ public class FtpDownLoad {
 //     */
 
     @Value("${ftp.host}")
-    private static String host;
+    private  String host;
 
     @Value("${ftp.port}")
-    private static Integer port;
+    private  Integer port;
 
     @Value("${ftp.username}")
-    private static String username;
+    private  String username;
 
     @Value("${ftp.password}")
-    private static String password;
+    private  String password;
 
     @Value("${ftp.basePath}")
-    private static String basePath;
+    private  String basePath;
 
     @Value("${ftp.filePath}")
-    private static String filePath;
+    private  String filePath;
 
-    public static boolean uploadFile(String filename, InputStream input) {
+    public  boolean uploadFile(String filename, InputStream input) {
         boolean result = false;
         FTPClient ftp = new FTPClient();
         try {
@@ -162,10 +162,10 @@ public class FtpDownLoad {
 
     public static void main(String[] args) {
         try {
-            FileInputStream in=new FileInputStream(new File("D:\\马.jpg"));
-            boolean flag = uploadFile("马.jpg",in);
-            System.out.println(flag);
-//            downloadFile();
+//            FileInputStream in=new FileInputStream(new File("D:\\马.jpg"));
+//            boolean flag = uploadFile("马.jpg",in);
+//            System.out.println(flag);
+            downloadFile("D:\\");
         } catch (Exception e) {
             e.printStackTrace();
         }

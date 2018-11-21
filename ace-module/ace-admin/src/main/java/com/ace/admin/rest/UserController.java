@@ -53,13 +53,13 @@ public class UserController extends BaseController<UserBiz,User> {
         //查询列表数据
         Query query = new Query(params);
         User user = new User();
-        if(params.get("userName") != null && !params.get("telPhone").equals("")){
+        if(params.get("userName") != null && !params.get("userName").equals("")){
             user.setUsername(params.get("userName").toString());
-        }if(params.get("name") != null && !params.get("telPhone").equals("")){
+        }if(params.get("name") != null && !params.get("name").equals("")){
             user.setName(params.get("name").toString());
-        }if(params.get("telPhone") != null && !params.get("telPhone").equals("")){
-            user.setTelPhone(params.get("telPhone").toString());
-        }if(params.get("status") != null){
+        }if(params.get("phone") != null && !params.get("phone").equals("")){
+            user.setTelPhone(params.get("phone").toString());
+        }if(params.get("status") != null && !params.get("status").equals("")){
             user.setStatus(Integer.valueOf(params.get("status").toString()));
         }
         return baseBiz.selectUser(query,user);
