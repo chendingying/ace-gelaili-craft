@@ -13,6 +13,7 @@ import com.ace.product.vo.ExcelTool;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,14 +92,30 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
     }
 
     public ObjectRestResponse ExcelInport(String path) throws IOException, InvalidFormatException {
+        List<String> strings = new ArrayList<>();
+        ObjectRestResponse  objectRestResponse = new ObjectRestResponse<Process>();
         if(path == null || path.equals("")){
             throw new ProcessInvalidException("路径不能为空");
         }
         File f1 = new File(path);
         JSONArray jsonArray =  ExcelTool.readExcel(f1);
-        List<Process> processList = jsonArray;
-        mapper.insertProcessList(processList);
-        return new ObjectRestResponse<Process>();
+        List<Process> processList = new ArrayList<>();
+        for(int i = 0;i<jsonArray.size();i++){
+            JSONObject object = jsonArray.getJSONObject(i);
+            View view = viewBiz.selectViewU9Conding(object.get("u9Coding").toString());
+            if(view == null){
+                strings.add(object.get("u9Coding").toString()+"编码不存在，非法数据，添加失败");
+                continue;
+            }
+            Process process = (Process) JSONObject.toBean(object,Process.class);
+            processList.add(process);
+            strings.add(object.get("u9Coding").toString()+"编码存在，添加成功");
+        }
+        if(processList.size() != 0){
+            mapper.insertProcessList(processList);
+        }
+        objectRestResponse.setData(strings);
+        return objectRestResponse;
     }
 
     // 版本判断
