@@ -7,6 +7,7 @@ import com.ace.common.util.Query;
 import com.ace.product.biz.ProcessBiz;
 import com.ace.product.biz.UpLoadBiz;
 import com.ace.product.entity.Process;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,20 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
 
     @Autowired
     UpLoadBiz upLoadBiz;
+
+
+    /**
+     * 工艺明细
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getProcess/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    public ObjectRestResponse getProcess(@PathVariable int id){
+        Process process = baseBiz.selectById(id);
+        return baseBiz.get(process);
+    }
+
     /**
      * 工艺信息查询（仅列出最新版本的列表）
      * @param params
@@ -146,4 +161,5 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
         }
        return upLoadBiz.upLoadImg("马.jpg",inputStream);
     }
+
 }

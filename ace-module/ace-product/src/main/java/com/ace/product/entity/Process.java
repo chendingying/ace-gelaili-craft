@@ -3,6 +3,7 @@ package com.ace.product.entity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -147,23 +148,23 @@ public class Process {
     private String process4PictureName;
 
     //面料
-    @Column(name = "shell_fabric")
-    private String shellFabric;
+//    @Column(name = "shell_fabric")
+//    private String shellFabric;
 
     //底料
-    @Column(name = "bed_charge")
+    @Transient
     private String bedCharge;
 
     //盒号
-    @Column(name = "box_number")
+    @Transient
     private String boxNumber;
 
     //箱号
-    @Column(name = "case_number")
+    @Transient
     private String caseNumber;
 
     //子件料号
-    @Column(name = "child_thing_number")
+    @Transient
     private String childThingNumber;
 
     //创建时间
@@ -471,13 +472,13 @@ public class Process {
         this.process4PictureName = process4PictureName;
     }
 
-    public String getShellFabric() {
-        return shellFabric;
-    }
-
-    public void setShellFabric(String shellFabric) {
-        this.shellFabric = shellFabric;
-    }
+//    public String getShellFabric() {
+//        return shellFabric;
+//    }
+//
+//    public void setShellFabric(String shellFabric) {
+//        this.shellFabric = shellFabric;
+//    }
 
     public String getBedCharge() {
         return bedCharge;

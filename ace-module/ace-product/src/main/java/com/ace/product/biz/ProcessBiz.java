@@ -7,6 +7,7 @@ import com.ace.common.msg.TableResultResponse;
 import com.ace.common.util.Query;
 import com.ace.common.util.VersionUtil;
 import com.ace.product.entity.Process;
+import com.ace.product.entity.View;
 import com.ace.product.mapper.ProcessMapper;
 import com.ace.product.vo.ExcelTool;
 import com.github.pagehelper.Page;
@@ -36,6 +37,22 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
 
     @Autowired
     protected BaseBiz baseBiz;
+
+    @Autowired
+    protected ViewBiz viewBiz;
+
+    public ObjectRestResponse<Process> get(Process process){
+        ObjectRestResponse<Process> entityObjectRestResponse = new ObjectRestResponse<>();
+        View view = viewBiz.selectViewU9Conding(process.getU9Coding());
+        if(view != null){
+            process.setBoxNumber(view.getValue3_53());
+            process.setCaseNumber(view.getValue3_52());
+            process.setBedCharge(view.getValue2_30());
+            process.setChildThingNumber(view.getValue_else());
+        }
+        entityObjectRestResponse.data((Process)process);
+        return entityObjectRestResponse;
+    }
 
     public TableResultResponse<Map<String,Object>> selectProcessForMaxVersion(Query query,Process process){
         Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());

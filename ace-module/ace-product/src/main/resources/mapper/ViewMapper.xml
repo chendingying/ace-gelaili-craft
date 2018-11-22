@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ace.product.mapper.ViewMapper">
+
+    <select id="selectViewU9Conding" resultType="com.ace.product.entity.View">
+      SELECT * from view_bom_item where code = #{code}
+    </select>
+
+</mapper>
