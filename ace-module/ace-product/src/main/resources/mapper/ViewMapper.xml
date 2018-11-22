@@ -6,4 +6,11 @@
       SELECT * from view_bom_item where code = #{code}
     </select>
 
+    <!--  模糊查询工艺型号-->
+    <select id="saveProcessU9Conding" resultType="java.util.HashMap">
+      select code as u9Coding from view_bom_item where 1=1
+        <if test="code != null">
+            and  code like '%'+#{code, jdbcType=VARCHAR}+ '%'
+        </if>
+    </select>
 </mapper>

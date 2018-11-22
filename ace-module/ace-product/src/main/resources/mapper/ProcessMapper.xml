@@ -6,6 +6,7 @@
     <select id="selectProcessU9Conding" resultType="java.util.HashMap">
         select pro.u9_coding as u9Coding,pro.product_model as productModel from product_process pro
         where version = (select max(version) from product_process where isnumeric(version)=1 and u9_coding = pro.u9_coding)
+        <if test="u9Coding != null"></if>
         and u9_coding like '%'+#{u9Coding, jdbcType=VARCHAR}+ '%'
     </select>
 

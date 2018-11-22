@@ -76,6 +76,11 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
        return processBiz.selectProcessU9Conding(u9Conding);
     }
 
+    @GetMapping("/saveU9Conding/{u9Conding}")
+    public ObjectRestResponse saveProcessU9Conding(@PathVariable("u9Conding") String u9Conding){
+        return processBiz.saveProcessU9Conding(u9Conding);
+    }
+
     /**
      * 手动新增工艺信息
      * @param process

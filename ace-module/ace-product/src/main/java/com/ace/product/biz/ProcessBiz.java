@@ -69,6 +69,14 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         return  entityObjectRestResponse.data(map);
     }
 
+    public ObjectRestResponse saveProcessU9Conding(String u9Conding){
+        ObjectRestResponse<Map<String,Object>> entityObjectRestResponse = new ObjectRestResponse<>();
+        List<Map<String,Object>> list = viewBiz.saveProcessU9Conding(u9Conding);
+        Map<String,Object> map = new HashedMap();
+        map.put("dataList",list);
+        return  entityObjectRestResponse.data(map);
+    }
+
     public ObjectRestResponse saveProcess(Process process){
         compareVersion(process);
         baseBiz.insertSelective(process);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by CDZ on 2018/11/22.
@@ -16,5 +17,9 @@ import java.util.List;
 public class ViewBiz extends BaseBiz<ViewMapper,View> {
     public View selectViewU9Conding(String code){
        return mapper.selectViewU9Conding(code);
+    }
+
+    public List<Map<String,Object>> saveProcessU9Conding(String code){
+        return mapper.saveProcessU9Conding(code);
     }
 }
