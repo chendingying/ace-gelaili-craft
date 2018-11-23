@@ -25,4 +25,5 @@ public interface ProcessMapper extends Mapper<Process> {
 
     public void insertProcessList(List<Process> list);
     public void insertProcess(@Param("process") Process process);
+    public List<Map<String,Object>> historyVersion(@Param("u9Coding") String u9Coding);
 }

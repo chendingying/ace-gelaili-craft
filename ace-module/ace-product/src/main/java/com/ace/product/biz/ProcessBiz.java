@@ -120,6 +120,10 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         return new ObjectRestResponse<Process>();
     }
 
+    public List<Map<String,Object>> historyVersion(String u9Coding){
+        return mapper.historyVersion(u9Coding);
+    }
+
     public ObjectRestResponse ExcelInport(String path) throws IOException, InvalidFormatException {
         List<String> strings = new ArrayList<>();
         ObjectRestResponse  objectRestResponse = new ObjectRestResponse<Process>();

@@ -23,6 +23,10 @@
         </if>
     </select>
 
+    <select id="historyVersion" resultType="java.util.HashMap">
+        select u9_coding as u9Coding,version,status from product_process where u9_coding = #{u9Coding, jdbcType=VARCHAR}
+    </select>
+
     <!-- u9Coding编码查询最新版本 -->
     <select id="selectMaxVersionForU9Coding" resultType="java.lang.String">
         select max(version) version from product_process where isnumeric(version)=1 and u9_coding = #{u9Coding, jdbcType=VARCHAR}

@@ -155,6 +155,11 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
         return processBiz.updateRegain(proces);
     }
 
+    @GetMapping("/historyVersion/{u9Coding}")
+    public List<Map<String,Object>> historyVersion(@PathVariable("u9Coding") String u9Coding){
+       return baseBiz.historyVersion(u9Coding);
+    }
+
     /**
      * Excel 导入
      * @return
