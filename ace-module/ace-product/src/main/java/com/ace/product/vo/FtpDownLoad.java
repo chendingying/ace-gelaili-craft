@@ -61,6 +61,7 @@ public class FtpDownLoad {
         FTPClient ftp = new FTPClient();
         try {
             int reply;
+            ftp.setControlEncoding("utf-8");
             ftp.connect(host, port);// 连接FTP服务器
             // 如果采用默认端口，可以使用ftp.connect(host)的方式直接连接FTP服务器
             ftp.login(username, password);// 登录
@@ -134,15 +135,18 @@ public class FtpDownLoad {
                 ftp.disconnect();
                 return result;
             }
+            ftp.setControlEncoding("utf-8");
+            ftp.setFileType(FTP.BINARY_FILE_TYPE);
             ftp.changeWorkingDirectory(basePath);// 转移到FTP服务器目录
+            ftp.enterLocalPassiveMode(); //在这里加上这行代码。重要,要不在listfiles时候会卡住不动,同时不会报错
             FTPFile[] fs = ftp.listFiles();
             for (FTPFile ff : fs) {
                 //创建本地的文件时候要把编码格式转回来
-                String localFileName=new String(ff.getName().getBytes("ISO-8859-1"),"UTF-8");
-                if (localFileName.equals(fileName)) {
-                    File localFile = new File(localPath + "/" + localFileName);
+//                String localFileName=new String(ff.getName().getBytes("UTF-8"),"UTF-8");
+                if (ff.getName().equals(fileName)) {
+                    File localFile = new File(localPath + "/" + ff.getName());
                     OutputStream is = new FileOutputStream(localFile);
-                    ftp.retrieveFile(ff.getName(), is);
+                    ftp.retrieveFile(new String(ff.getName().getBytes("UTF-8"),"ISO-8859-1"), is);
                     is.close();
                 }
             }

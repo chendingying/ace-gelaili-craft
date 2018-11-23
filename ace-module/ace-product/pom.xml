@@ -18,7 +18,7 @@
         <dependency>
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
-            <version>3.3</version>
+            <version>3.6</version>
         </dependency>
         <!-- Poi（解析Excle表格用） -->
         <dependency>
