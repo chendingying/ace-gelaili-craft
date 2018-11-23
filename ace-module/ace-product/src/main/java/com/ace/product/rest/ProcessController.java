@@ -170,6 +170,11 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
         return processBiz.updateRegain(proces);
     }
 
+    /**
+     * 查看历史版本
+     * @param u9Coding
+     * @return
+     */
     @GetMapping("/historyVersion/{u9Coding}")
     public List<Map<String,Object>> historyVersion(@PathVariable("u9Coding") String u9Coding){
        return baseBiz.historyVersion(u9Coding);
@@ -181,22 +186,27 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
      */
     @PostMapping("/excelInport")
     @ResponseBody
-    public ObjectRestResponse ExcelInport() throws IOException, InvalidFormatException {
-        String path = "D:\\工艺信息导入模板.xlsx";
-        return processBiz.ExcelInport(path);
+    @Transactional
+    public ObjectRestResponse ExcelInport(@RequestParam("myfile") MultipartFile myFile) throws IOException, InvalidFormatException {
+        System.out.println(myFile.getOriginalFilename());
+//        String path = "D:\\工艺信息导入模板.xlsx";
+        return processBiz.ExcelInport(myFile.getOriginalFilename());
     }
 
     // ftp下载模板
     @RequestMapping(value="/ftpDownload", method = RequestMethod.POST)
-    public @ResponseBody boolean Ftpdownload(){
-        String localPath = "D:\\";
+    @Transactional
+    public @ResponseBody boolean Ftpdownload(@RequestBody String localPath){
+       // String localPath = "D:\\";
         return upLoadBiz.Ftpdownload(localPath);
     }
 
     //ftp处理文件上传
     @RequestMapping(value="/ftpUploadImg", method = RequestMethod.POST)
-    public @ResponseBody boolean uploadImg() throws IOException {
-
+    @Transactional
+    public @ResponseBody boolean uploadImg(@RequestParam("myfile") MultipartFile myFile) throws IOException {
+        System.out.println(myFile.getOriginalFilename());
+        System.out.println(myFile.getName());
         String filePath="D:\\马.jpg";
         // TODO Auto-generated method stub
         InputStream inputStream = null;

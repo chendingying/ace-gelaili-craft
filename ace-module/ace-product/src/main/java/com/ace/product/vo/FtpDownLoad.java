@@ -61,10 +61,10 @@ public class FtpDownLoad {
         FTPClient ftp = new FTPClient();
         try {
             int reply;
-            ftp.setControlEncoding("utf-8");
             ftp.connect(host, port);// 连接FTP服务器
             // 如果采用默认端口，可以使用ftp.connect(host)的方式直接连接FTP服务器
             ftp.login(username, password);// 登录
+            ftp.enterLocalPassiveMode(); //在这里加上这行代码。重要,要不在listfiles时候会卡住不动,同时不会报错
             reply = ftp.getReplyCode();
             if (!FTPReply.isPositiveCompletion(reply)) {
                 ftp.disconnect();
@@ -116,12 +116,6 @@ public class FtpDownLoad {
      * @return
      */
     public boolean downloadFile(String localPath) {
-
-//        String host = "192.168.249.211";
-//        Integer port = 21;
-//        String username = "ftpuser";
-//        String password = "123456";
-//        String remotePath ="/pub";
         String fileName = "工艺信息导入模板.xlsx";
         boolean result = false;
         FTPClient ftp = new FTPClient();
