@@ -13,7 +13,7 @@ import java.util.Map;
 public interface ProcessMapper extends Mapper<Process> {
     public List<Map<String,Object>> selectProcessForMaxVersion(@Param("u9Coding") String u9Coding,@Param("customer") String customer,@Param("status") Integer status);
 
-    public List<Map<String,Object>> selectProcessU9Conding(@Param("u9Coding")String u9Coding);
+    public List<Map<String,Object>> selectProcessU9Conding();
 
     public String selectMaxVersionForU9Coding(@Param("u9Coding") String u9Coding,@Param("id") Integer id);
 
@@ -24,4 +24,5 @@ public interface ProcessMapper extends Mapper<Process> {
     public void updateInvalidVersion(@Param("id") Integer id,@Param("u9Coding") String u9Coding);
 
     public void insertProcessList(List<Process> list);
+    public void insertProcess(@Param("process") Process process);
 }

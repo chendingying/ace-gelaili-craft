@@ -61,17 +61,17 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         return new TableResultResponse<Map<String,Object>>(result.getTotal(), list);
     }
 
-    public ObjectRestResponse selectProcessU9Conding(String u9Conding){
+    public ObjectRestResponse selectProcessU9Conding(){
         ObjectRestResponse<Map<String,Object>> entityObjectRestResponse = new ObjectRestResponse<>();
-        List<Map<String,Object>> list = mapper.selectProcessU9Conding(u9Conding);
+        List<Map<String,Object>> list = mapper.selectProcessU9Conding();
         Map<String,Object> map = new HashedMap();
         map.put("dataList",list);
         return  entityObjectRestResponse.data(map);
     }
 
-    public ObjectRestResponse saveProcessU9Conding(String u9Conding){
+    public ObjectRestResponse saveProcessU9Conding(){
         ObjectRestResponse<Map<String,Object>> entityObjectRestResponse = new ObjectRestResponse<>();
-        List<Map<String,Object>> list = viewBiz.saveProcessU9Conding(u9Conding);
+        List<Map<String,Object>> list = viewBiz.saveProcessU9Conding();
         Map<String,Object> map = new HashedMap();
         map.put("dataList",list);
         return  entityObjectRestResponse.data(map);
@@ -79,7 +79,7 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
 
     public ObjectRestResponse saveProcess(Process process){
         compareVersion(process);
-        baseBiz.insertSelective(process);
+        mapper.insertProcess(process);
         return new ObjectRestResponse<Process>();
     }
 
@@ -129,7 +129,10 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
     // 版本判断
     public void compareVersion(Process process){
         String version = mapper.selectMaxVersionForU9Coding(process.getU9Coding(),null);
-        if(process.getVersion() == null || process.getVersion().equals("")) {
+        if(version == null || version.equals("")){
+            version = "1.0";
+        }
+        if(process.getVersion() == null || process.getVersion().equals("") ) {
             process.setVersion("1.0");
         }
         Integer compare = VersionUtil.compareVersion(version,process.getVersion());

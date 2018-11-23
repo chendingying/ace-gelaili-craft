@@ -6,8 +6,6 @@
     <select id="selectProcessU9Conding" resultType="java.util.HashMap">
         select pro.u9_coding as u9Coding,pro.product_model as productModel from product_process pro
         where version = (select max(version) from product_process where isnumeric(version)=1 and u9_coding = pro.u9_coding)
-        <if test="u9Coding != null"></if>
-        and u9_coding like '%'+#{u9Coding, jdbcType=VARCHAR}+ '%'
     </select>
 
     <!-- 查询工艺信息 -->
@@ -61,6 +59,39 @@
       update product_process set status = 0 where id = #{id,jdbcType=INTEGER} and u9_coding = #{u9Coding, jdbcType=VARCHAR}
     </update>
 
+    <insert id="insertProcess">
+        INSERT INTO product_process(u9_coding,product_model,customer,version,file_coding,issue_date,update_date,spraying_color,steel_seal,move_seal,pof_plastic_products,box_plastic,case_plastic,box1_label,box1_num,box2_label,box2_num,case1_label,case1_num,case2_label,case2_num,instructions,qualified_certificate,sealing_paste,packaging_tape,packaging_tape_number,sealing_gummed_paper)
+        values
+        (
+        #{process.u9Coding,jdbcType=VARCHAR},
+            #{process.productModel,jdbcType=VARCHAR},
+            #{process.customer,jdbcType=VARCHAR},
+            #{process.version,jdbcType=VARCHAR},
+            #{process.fileCoding,jdbcType=VARCHAR},
+            #{process.issueDate,jdbcType=DATE},
+            #{process.updateDate,jdbcType=DATE},
+            #{process.sprayingColor,jdbcType=VARCHAR},
+            #{process.steelSeal,jdbcType=VARCHAR},
+            #{process.moveSeal,jdbcType=VARCHAR},
+            #{process.pofPlasticProducts,jdbcType=VARCHAR},
+            #{process.boxPlastic,jdbcType=VARCHAR},
+            #{process.casePlastic,jdbcType=VARCHAR},
+            #{process.box1Label,jdbcType=VARCHAR},
+            #{process.box1Num,jdbcType=INTEGER},
+            #{process.box2Label,jdbcType=VARCHAR},
+            #{process.box2Num,jdbcType=INTEGER},
+            #{process.case1Label,jdbcType=VARCHAR},
+            #{process.case1Num,jdbcType=INTEGER},
+            #{process.case2Label,jdbcType=VARCHAR},
+            #{process.case2Num,jdbcType=INTEGER},
+            #{process.instructions,jdbcType=VARCHAR},
+            #{process.qualifiedCertificate,jdbcType=VARCHAR},
+            #{process.sealingPaste,jdbcType=VARCHAR},
+            #{process.packagingTape,jdbcType=VARCHAR},
+            #{process.packagingTapeNumber,jdbcType=INTEGER},
+            #{process.sealingGummedPaper,jdbcType=VARCHAR}
+        )
+    </insert>
     <!--批量添加 -->
     <insert id="insertProcessList" parameterType="java.util.List"  useGeneratedKeys="true">
         INSERT INTO product_process(u9_coding,product_model,customer,version,file_coding,issue_date,update_date,spraying_color,steel_seal,move_seal,pof_plastic_products,box_plastic,case_plastic,box1_label,box1_num,box2_label,box2_num,case1_label,case1_num,case2_label,case2_num,instructions,qualified_certificate,sealing_paste,packaging_tape,packaging_tape_number,sealing_gummed_paper,process1_picture_name,process2_picture_name,process3_picture_name,process4_picture_name)

@@ -19,7 +19,7 @@ public class ViewBiz extends BaseBiz<ViewMapper,View> {
        return mapper.selectViewU9Conding(code);
     }
 
-    public List<Map<String,Object>> saveProcessU9Conding(String code){
-        return mapper.saveProcessU9Conding(code);
+    public List<Map<String,Object>> saveProcessU9Conding(){
+        return mapper.saveProcessU9Conding();
     }
 }

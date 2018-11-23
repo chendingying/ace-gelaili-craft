@@ -13,5 +13,5 @@ import java.util.Map;
 public interface ViewMapper extends Mapper<View> {
     View selectViewU9Conding(@Param("code") String code);
 
-    List<Map<String,Object>> saveProcessU9Conding(@Param("code") String code);
+    List<Map<String,Object>> saveProcessU9Conding();
 }

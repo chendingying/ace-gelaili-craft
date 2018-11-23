@@ -15,6 +15,7 @@ public class Process {
     @Id
     private Integer id;
 
+
     //状态
     @Column(name = "status")
     private Integer status;

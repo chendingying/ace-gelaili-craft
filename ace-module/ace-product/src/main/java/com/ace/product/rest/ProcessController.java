@@ -68,17 +68,21 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
 
     /**
      * 工艺信息编码模糊查询
-     * @param u9Conding
+     * @param
      * @return
      */
-    @GetMapping("/u9Conding/{u9Conding}")
-    public ObjectRestResponse selectProcessU9Conding(@PathVariable("u9Conding") String u9Conding){
-       return processBiz.selectProcessU9Conding(u9Conding);
+    @GetMapping("/u9Conding")
+    public ObjectRestResponse selectProcessU9Conding(){
+       return processBiz.selectProcessU9Conding();
     }
 
-    @GetMapping("/saveU9Conding/{u9Conding}")
-    public ObjectRestResponse saveProcessU9Conding(@PathVariable("u9Conding") String u9Conding){
-        return processBiz.saveProcessU9Conding(u9Conding);
+    /**
+     * 新增u9编码模糊查询
+     * @return
+     */
+    @GetMapping("/saveU9Conding")
+    public ObjectRestResponse saveProcessU9Conding(){
+        return processBiz.saveProcessU9Conding();
     }
 
     /**
@@ -90,7 +94,7 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
     @Transactional
     @ResponseBody
     public ObjectRestResponse saveProcess(@RequestBody Process process){
-       return processBiz.saveProcess(process);
+        return baseBiz.saveProcess(process);
     }
 
     /**
