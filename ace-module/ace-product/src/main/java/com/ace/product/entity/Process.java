@@ -15,7 +15,6 @@ public class Process {
     @Id
     private Integer id;
 
-
     //状态
     @Column(name = "status")
     private Integer status;
@@ -199,7 +198,6 @@ public class Process {
     //最后更新人主机
     @Column(name = "upd_host")
     private String updHost;
-
 
     public Integer getStatus() {
         return status;

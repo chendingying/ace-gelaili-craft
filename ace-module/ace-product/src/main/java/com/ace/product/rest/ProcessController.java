@@ -60,7 +60,7 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
             process.setCustomer(params.get("customer").toString());
         }if(params.get("u9Coding") != null && !params.get("u9Coding").equals("")){
             process.setU9Coding(params.get("u9Coding").toString());
-        }if(params.get("status") != null){
+        }if(params.get("status") != null && !params.get("status").equals("")){
             process.setStatus(Integer.valueOf(params.get("status").toString()));
         }
         return processBiz.selectProcessForMaxVersion(query,process);
@@ -95,6 +95,23 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
     @ResponseBody
     public ObjectRestResponse saveProcess(@RequestBody Process process){
         return baseBiz.saveProcess(process);
+    }
+
+    /**
+     * 手动编辑工艺信息
+     * @param process
+     * @return
+     */
+    @PutMapping("/update/{id}")
+    @Transactional
+    @ResponseBody
+    public ObjectRestResponse updateProcess(@RequestBody Process process,@PathVariable Integer id){
+        Boolean bool = baseBiz.updateProcess(process,id);
+        if(!bool){
+            process.setId(id);
+            baseBiz.updateById(process);
+        }
+        return new ObjectRestResponse<Process>();
     }
 
     /**
@@ -134,7 +151,8 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
     @Transactional
     @ResponseBody
     public ObjectRestResponse updateRegain(@PathVariable("id") Integer id) {
-        return processBiz.updateRegain(id);
+        Process proces = baseBiz.selectById(id);
+        return processBiz.updateRegain(proces);
     }
 
     /**

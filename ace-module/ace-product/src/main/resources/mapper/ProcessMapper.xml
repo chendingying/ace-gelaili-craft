@@ -31,6 +31,7 @@
         </if>
     </select>
 
+
     <!--批量作废 -->
     <update id="updateInvalid" parameterType="java.util.List">
         <if test="list !=null and list.size > 0">

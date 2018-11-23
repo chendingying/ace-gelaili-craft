@@ -37,9 +37,6 @@ import java.util.Map;
 public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
 
     @Autowired
-    protected BaseBiz baseBiz;
-
-    @Autowired
     protected ViewBiz viewBiz;
 
     public ObjectRestResponse<Process> get(Process process){
@@ -77,8 +74,33 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         return  entityObjectRestResponse.data(map);
     }
 
+    public Boolean updateProcess(Process process,Integer id){
+        String version = mapper.selectMaxVersionForU9Coding(process.getU9Coding(),null);
+        if(version == null || version.equals("")){
+            version = "1.0";
+        }
+        if(process.getVersion() == null || process.getVersion().equals("") ) {
+            process.setVersion("1.0");
+        }
+        Integer compare = VersionUtil.compareVersion(version,process.getVersion());
+        if(compare == 1) {
+            throw new ProcessInvalidException("产品编码：'"+ process.getU9Coding() +"' 的最新版本不能小于当前版本,当前最高版本为："+ version);
+        }if(compare == -1){
+            List<Map<String,Object>> list = mapper.selectProcessForMaxVersion(process.getU9Coding(),null,1);
+            for(Map map : list){
+                mapper.updateInvalidVersion(Integer.valueOf(map.get("id").toString()),map.get("u9Coding").toString());
+            }
+            mapper.insertProcess(process);
+            return true;
+        }
+        return false;
+    }
     public ObjectRestResponse saveProcess(Process process){
         compareVersion(process);
+        List<Map<String,Object>> list = mapper.selectProcessForMaxVersion(process.getU9Coding(),null,1);
+        for(Map map : list){
+            mapper.updateInvalidVersion(Integer.valueOf(map.get("id").toString()),map.get("u9Coding").toString());
+        }
         mapper.insertProcess(process);
         return new ObjectRestResponse<Process>();
     }
@@ -88,8 +110,7 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         return new ObjectRestResponse<Process>();
     }
 
-    public ObjectRestResponse updateRegain(Integer id){
-        Process process = (Process)baseBiz.selectById(id);
+    public ObjectRestResponse updateRegain(Process process){
         String version = mapper.selectMaxVersionForU9Coding(process.getU9Coding(),process.getId());
         if(version == null || version.equals("")) {
             throw new ProcessInvalidException("当前是最新版本");
@@ -117,6 +138,10 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
             }
             Process process = (Process) JSONObject.toBean(object,Process.class);
             processList.add(process);
+            List<Map<String,Object>> list = mapper.selectProcessForMaxVersion(process.getU9Coding(),null,1);
+            for(Map map : list){
+                mapper.updateInvalidVersion(Integer.valueOf(map.get("id").toString()),map.get("u9Coding").toString());
+            }
             strings.add(object.get("u9Coding").toString()+"编码存在，添加成功");
         }
         if(processList.size() != 0){
