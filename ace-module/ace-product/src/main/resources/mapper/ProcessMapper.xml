@@ -8,9 +8,24 @@
         where version = (select max(version) from product_process where isnumeric(version)=1 and u9_coding = pro.u9_coding)
     </select>
 
+
+    <select id="selectProcess" resultType="java.util.HashMap">
+          select pro.status as status, pro.id as id,pro.u9_coding as u9Coding,pro.product_model as productModel,pro.customer,pro.version,pro.file_coding as fileCoding,v.value3_53 as boxNumber,v.value3_52 as caseNumber
+        from product_process pro left join view_bom_item v on pro.u9_coding = v.code
+        <if test="u9Coding != null">
+            and pro.u9_coding LIKE '%' + #{u9Coding, jdbcType=VARCHAR} + '%'
+        </if>
+        <if test="customer != null">
+            and pro.customer LIKE '%' + #{customer, jdbcType=VARCHAR} + '%'
+        </if>
+        <if test="version != null">
+            and pro.version = #{version}
+        </if>
+    </select>
     <!-- 查询工艺信息 -->
     <select id="selectProcessForMaxVersion" resultType="java.util.HashMap">
-        select pro.status as status, pro.id as id,pro.u9_coding as u9Coding,pro.product_model as productModel,pro.customer,pro.version,pro.file_coding as fileCoding,pro.box_number as boxNumber,pro.case_number as caseNumber from product_process pro
+        select pro.status as status, pro.id as id,pro.u9_coding as u9Coding,pro.product_model as productModel,pro.customer,pro.version,pro.file_coding as fileCoding,v.value3_53 as boxNumber,v.value3_52 as caseNumber
+        from product_process pro left join view_bom_item v on pro.u9_coding = v.code
         where pro.version = (select max(version) from product_process where isnumeric(version)=1 and u9_coding = pro.u9_coding)
         <if test="u9Coding != null">
             and pro.u9_coding LIKE '%' + #{u9Coding, jdbcType=VARCHAR} + '%'

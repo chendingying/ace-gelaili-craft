@@ -58,6 +58,12 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         return new TableResultResponse<Map<String,Object>>(result.getTotal(), list);
     }
 
+    public TableResultResponse<Map<String,Object>> selectProcess(Query query,Process process){
+        Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());
+        List<Map<String,Object>> list  = mapper.selectProcess(process.getU9Coding(),process.getCustomer(),process.getVersion());
+        return new TableResultResponse<Map<String,Object>>(result.getTotal(), list);
+    }
+
     public ObjectRestResponse selectProcessU9Conding(){
         ObjectRestResponse<Map<String,Object>> entityObjectRestResponse = new ObjectRestResponse<>();
         List<Map<String,Object>> list = mapper.selectProcessU9Conding();

@@ -66,6 +66,21 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
         return processBiz.selectProcessForMaxVersion(query,process);
     }
 
+    @GetMapping("/historyProcess/page")
+    public TableResultResponse<Map<String,Object>> selectProcessn(@RequestParam Map<String, Object> params){
+        //查询列表数据
+        Query query = new Query(params);
+        Process process = new Process();
+        if(params.get("customer") != null && !params.get("customer").equals("")){
+            process.setCustomer(params.get("customer").toString());
+        }if(params.get("u9Coding") != null && !params.get("u9Coding").equals("")){
+            process.setU9Coding(params.get("u9Coding").toString());
+        }if(params.get("version") != null && !params.get("version").equals("")){
+            process.setStatus(Integer.valueOf(params.get("version").toString()));
+        }
+        return processBiz.selectProcess(query,process);
+    }
+
     /**
      * 工艺信息编码模糊查询
      * @param
