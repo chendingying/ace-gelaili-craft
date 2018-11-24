@@ -47,6 +47,22 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
     }
 
     /**
+     * 查看历史版本
+     * @param
+     * @return
+     */
+    @GetMapping("/historyVersion/page")
+    public TableResultResponse<Map<String,Object>> historyVersion(@RequestParam Map<String, Object> params){
+        //查询列表数据
+        Query query = new Query(params);
+        Process process = new Process();
+        if(params.get("u9Coding") != null && !params.get("u9Coding").equals("")){
+            process.setU9Coding(params.get("u9Coding").toString());
+        }
+        return baseBiz.historyVersion(query,process);
+    }
+
+    /**
      * 工艺信息查询（仅列出最新版本的列表）
      * @param params
      * @return
@@ -170,15 +186,7 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
         return processBiz.updateRegain(proces);
     }
 
-    /**
-     * 查看历史版本
-     * @param u9Coding
-     * @return
-     */
-    @GetMapping("/historyVersion/{u9Coding}")
-    public List<Map<String,Object>> historyVersion(@PathVariable("u9Coding") String u9Coding){
-       return baseBiz.historyVersion(u9Coding);
-    }
+
 
     /**
      * Excel 导入

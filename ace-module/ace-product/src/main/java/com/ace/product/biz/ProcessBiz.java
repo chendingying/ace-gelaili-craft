@@ -52,6 +52,12 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         return entityObjectRestResponse;
     }
 
+    public TableResultResponse<Map<String,Object>> historyVersion(Query query,Process process){
+        Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());
+        List<Map<String,Object>> list  =mapper.historyVersion(process.getU9Coding());
+        return new TableResultResponse<Map<String,Object>>(result.getTotal(), list);
+    }
+
     public TableResultResponse<Map<String,Object>> selectProcessForMaxVersion(Query query,Process process){
         Page<Object> result = PageHelper.startPage(query.getPage(), query.getLimit());
         List<Map<String,Object>> list  = mapper.selectProcessForMaxVersion(process.getU9Coding(),process.getCustomer(),process.getStatus());
@@ -126,9 +132,7 @@ public class ProcessBiz extends BaseBiz<ProcessMapper,Process> {
         return new ObjectRestResponse<Process>();
     }
 
-    public List<Map<String,Object>> historyVersion(String u9Coding){
-        return mapper.historyVersion(u9Coding);
-    }
+
 
     public ObjectRestResponse ExcelInport(String path) throws IOException, InvalidFormatException {
         List<String> strings = new ArrayList<>();

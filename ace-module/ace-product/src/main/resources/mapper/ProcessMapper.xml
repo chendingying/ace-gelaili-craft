@@ -39,7 +39,9 @@
     </select>
 
     <select id="historyVersion" resultType="java.util.HashMap">
-        select u9_coding as u9Coding,version,status from product_process where u9_coding = #{u9Coding, jdbcType=VARCHAR}
+        select pro.status as status, pro.id as id,pro.u9_coding as u9Coding,pro.product_model as productModel,pro.customer,pro.version,pro.file_coding as fileCoding,v.value3_53 as boxNumber,v.value3_52 as caseNumber
+        from product_process pro left join view_bom_item v on pro.u9_coding = v.code
+         where u9_coding = #{u9Coding, jdbcType=VARCHAR}
     </select>
 
     <!-- u9Coding编码查询最新版本 -->
