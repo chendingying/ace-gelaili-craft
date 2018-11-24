@@ -4,9 +4,11 @@ import com.ace.product.vo.FtpDownLoad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -22,7 +24,7 @@ public class UpLoadBiz {
         return ftpDownLoad.uploadFile(filename,inputStream);
     }
 
-    public boolean Ftpdownload(String localPath){
-        return ftpDownLoad.downloadFile(localPath);
+    public  InputStream  Ftpdownload(String fileName) throws IOException {
+        return ftpDownLoad.downloadFile(fileName);
     }
 }

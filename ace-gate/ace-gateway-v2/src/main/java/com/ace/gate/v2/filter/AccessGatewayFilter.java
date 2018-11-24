@@ -101,6 +101,10 @@ public class AccessGatewayFilter implements GlobalFilter {
             ServerHttpRequest build = mutate.build();
             return gatewayFilterChain.filter(serverWebExchange.mutate().request(build).build());
         }
+        if(isFtp(requestUri)){
+            ServerHttpRequest build = mutate.build();
+            return gatewayFilterChain.filter(serverWebExchange.mutate().request(build).build());
+        }
         IJWTInfo user = null;
         try {
             user = getJWTUser(request, mutate);
@@ -233,6 +237,13 @@ public class AccessGatewayFilter implements GlobalFilter {
             }
         }
         return flag;
+    }
+
+    private boolean isFtp(String requestUri){
+        if(requestUri.equals("/product/process/ftpDownload")){
+            return true;
+        }
+        return false;
     }
 
     /**

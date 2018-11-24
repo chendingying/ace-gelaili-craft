@@ -1,5 +1,6 @@
 package com.ace.product.rest;
 
+import com.ace.auth.client.annotation.IgnoreUserToken;
 import com.ace.common.msg.ObjectRestResponse;
 import com.ace.common.msg.TableResultResponse;
 import com.ace.common.rest.BaseController;
@@ -8,16 +9,17 @@ import com.ace.product.biz.ProcessBiz;
 import com.ace.product.biz.UpLoadBiz;
 import com.ace.product.entity.Process;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,9 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
 
     @Autowired
     UpLoadBiz upLoadBiz;
+
+    @Value("${ftp.fileName}")
+    private String fileName;
 
 
     /**
@@ -202,11 +207,16 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
     }
 
     // ftp下载模板
-    @RequestMapping(value="/ftpDownload", method = RequestMethod.POST)
+    @RequestMapping(value="/ftpDownload", method = RequestMethod.GET)
     @Transactional
-    public @ResponseBody boolean Ftpdownload(@RequestBody String localPath){
-       // String localPath = "D:\\";
-        return upLoadBiz.Ftpdownload(localPath);
+    @IgnoreUserToken
+    public void Ftpdownload( HttpServletResponse response) throws IOException {
+        InputStream inputStream = upLoadBiz.Ftpdownload(new String(fileName.getBytes("ISO8859-1"),"UTF-8"));
+        OutputStream outputStream = response.getOutputStream();
+        response.setContentType("application/x-download");
+        response.addHeader("Content-Disposition", "attachment;fileName=" +   fileName );   // 设置文件名
+        IOUtils.copy(inputStream, outputStream);
+        outputStream.flush();
     }
 
     //ftp处理文件上传

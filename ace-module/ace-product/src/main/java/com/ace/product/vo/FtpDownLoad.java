@@ -1,9 +1,8 @@
 package com.ace.product.vo;
 
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -25,6 +24,8 @@ import java.io.*;
 @Component
 @PropertySource({"classpath:ftp.properties"})
 public class FtpDownLoad {
+
+    Logger log = LoggerFactory.getLogger(FtpDownLoad.class);
 //    /**
 //     * Description: 向FTP服务器上传文件
 //     * @param host FTP服务器hostname
@@ -110,14 +111,10 @@ public class FtpDownLoad {
         return result;
     }
 
-    /**
-     * Description: 从FTP服务器下载文件
 
-     * @return
-     */
-    public boolean downloadFile(String localPath) {
-        String fileName = "工艺信息导入模板.xlsx";
-        boolean result = false;
+    public InputStream  downloadFile(String filename)
+            throws IOException {
+        InputStream in=null;
         FTPClient ftp = new FTPClient();
         try {
             int reply;
@@ -125,39 +122,90 @@ public class FtpDownLoad {
             // 如果采用默认端口，可以使用ftp.connect(host)的方式直接连接FTP服务器
             ftp.login(username, password);// 登录
             reply = ftp.getReplyCode();
+            System.out.println(host);
+            System.out.println(port);
+            System.out.println(username);
+            System.out.println(password);
+            System.out.println(reply);
             if (!FTPReply.isPositiveCompletion(reply)) {
                 ftp.disconnect();
-                return result;
+                throw new IOException("failed to connect to the FTP Server:");
             }
             ftp.setControlEncoding("utf-8");
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
             ftp.changeWorkingDirectory(basePath);// 转移到FTP服务器目录
             ftp.enterLocalPassiveMode(); //在这里加上这行代码。重要,要不在listfiles时候会卡住不动,同时不会报错
             FTPFile[] fs = ftp.listFiles();
+            System.out.println(fs.length);
             for (FTPFile ff : fs) {
-                //创建本地的文件时候要把编码格式转回来
-//                String localFileName=new String(ff.getName().getBytes("UTF-8"),"UTF-8");
-                if (ff.getName().equals(fileName)) {
-                    File localFile = new File(localPath + "/" + ff.getName());
-                    OutputStream is = new FileOutputStream(localFile);
-                    ftp.retrieveFile(new String(ff.getName().getBytes("UTF-8"),"ISO-8859-1"), is);
-                    is.close();
+                String localFileName=new String(ff.getName().getBytes("UTF-8"),"UTF-8");
+                if (localFileName.equals(filename)) {
+                    in = ftp.retrieveFileStream(new String(ff.getName().getBytes("UTF-8"),"ISO-8859-1"));
+//                    File localFile = new File(localPath + "/" + ff.getName());
+//                    OutputStream is = new FileOutputStream(localFile);
+//                    ftp.retrieveFile(new String(ff.getName().getBytes("UTF-8"),"ISO-8859-1"), is);
+//                    is.close();
                 }
             }
-            ftp.logout();
-            result = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (ftp.isConnected()) {
-                try {
-                    ftp.disconnect();
-                } catch (IOException ioe) {
-                }
-            }
+//            in=ftp.retrieveFileStream(filename);
+        } catch (FTPConnectionClosedException e) {
+
+            log.error("ftp连接被关闭！", e);
+            throw e;
+        } catch (Exception e) {
+            log.error("ERR : upload file "+ filename+ " from ftp : failed!", e);
         }
-        return result;
+        return in;
     }
+
+        /**
+         * Description: 从FTP服务器下载文件
+
+         * @return
+         */
+//    public boolean downloadFile(String localPath) {
+//        String fileName = "工艺信息导入模板.xlsx";
+//        boolean result = false;
+//        FTPClient ftp = new FTPClient();
+//        try {
+//            int reply;
+//            ftp.connect(host, port);
+//            // 如果采用默认端口，可以使用ftp.connect(host)的方式直接连接FTP服务器
+//            ftp.login(username, password);// 登录
+//            reply = ftp.getReplyCode();
+//            if (!FTPReply.isPositiveCompletion(reply)) {
+//                ftp.disconnect();
+//                return result;
+//            }
+//            ftp.setControlEncoding("utf-8");
+//            ftp.setFileType(FTP.BINARY_FILE_TYPE);
+//            ftp.changeWorkingDirectory(basePath);// 转移到FTP服务器目录
+//            ftp.enterLocalPassiveMode(); //在这里加上这行代码。重要,要不在listfiles时候会卡住不动,同时不会报错
+//            FTPFile[] fs = ftp.listFiles();
+//            for (FTPFile ff : fs) {
+//                //创建本地的文件时候要把编码格式转回来
+////                String localFileName=new String(ff.getName().getBytes("UTF-8"),"UTF-8");
+//                if (ff.getName().equals(fileName)) {
+//                    File localFile = new File(localPath + "/" + ff.getName());
+//                    OutputStream is = new FileOutputStream(localFile);
+//                    ftp.retrieveFile(new String(ff.getName().getBytes("UTF-8"),"ISO-8859-1"), is);
+//                    is.close();
+//                }
+//            }
+//            ftp.logout();
+//            result = true;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (ftp.isConnected()) {
+//                try {
+//                    ftp.disconnect();
+//                } catch (IOException ioe) {
+//                }
+//            }
+//        }
+//        return result;
+//    }
 
     public static void main(String[] args) {
         try {
