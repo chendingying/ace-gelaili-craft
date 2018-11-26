@@ -13,10 +13,10 @@ spring:
         defaultPropertyInclusion: ALWAYS
         ##sqlserver
     datasource:
-        url: jdbc:sqlserver://localhost:1433;DatabaseName=ag_admin_v1
+        url: jdbc:sqlserver://192.168.249.211:1433;DatabaseName=ag_admin_v1
         driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
         username: sa
-        password: 123456
+        password: Cdy123456
         initial-size: 1
         min-idle: 1
         max-active: 20

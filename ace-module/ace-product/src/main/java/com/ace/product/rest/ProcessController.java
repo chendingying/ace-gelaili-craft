@@ -200,8 +200,8 @@ public class ProcessController extends BaseController<ProcessBiz,Process> {
     @PostMapping("/excelInport")
     @ResponseBody
     @Transactional
-    public ObjectRestResponse ExcelInport(@RequestParam("myfile") MultipartFile myFile) throws IOException, InvalidFormatException {
-        System.out.println(myFile.getOriginalFilename());
+    public ObjectRestResponse ExcelInport(MultipartFile myFile) throws IOException, InvalidFormatException {
+        System.out.println(myFile.getInputStream());
 //        String path = "D:\\工艺信息导入模板.xlsx";
         return processBiz.ExcelInport(myFile.getOriginalFilename());
     }
